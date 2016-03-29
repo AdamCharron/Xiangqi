@@ -11,10 +11,13 @@ class GameTree(object):
     '''
     def __init__ (self,gamestate,depth):
         self.current=gamestate
-        self.depth=depth
+        self.depth=depth#maximum depth of the tree search. Increase for better AI, decrease for time improvement
     def move(self):
         '''navigate the game tree to come up with best configuration, return that gamestate'''
         possibilities=self.current.successors()
+        if len(possibilities)==0:
+            #case of no valid moves
+            return self.current.value()
         value=float("inf")
         choice="no moves"
         if gamestate.turn:
@@ -32,17 +35,18 @@ class GameTree(object):
                     value=child_value
                     choice=child
         return choice
-        #note if there is no valid moves, it will return "no moves"
+        #note if there is no valid moves, it will return the string "no moves", otherwise it returns the best gamestate
     
     def nodeval(self,state,depth,parent_val):
+        #evaluates the value of chosing each child in the gametree by considering up to debth nodes beneath it.
         if depth==0:
+            return state.value()
+        possibilities=state.successors()
+        if len(possibilities)==0:
+            #case of no valid moves
             return state.value()
         if state.turn:
             value=-float("inf")
-            possibilities=state.successors()
-            if len(possibilities)==0:
-                #case of no valid moves
-                return state.value()
             for child in possibilities:
                 child_value=self.nodeval(child,depth-1,value)
                 value=max(child_value,value)
@@ -50,10 +54,6 @@ class GameTree(object):
                     return value
         else:
             value=float("inf")
-            possibilities=state.successors()
-            if len(possibilities)==0:
-                #case of no valid moves
-                return state.value()
             for child in possibilities:
                 child_value=self.nodeval(child,depth-1,value)
                 value=min(child_value,value)
