@@ -2,6 +2,7 @@ from gametree import *
 from pieces import *
 
 class Gamestate(object):
+    def __init__(self, pieces_true, pieces_false, turn, previous_piece, new_piece):
         # Pieces of the true player is an array of Piece objects
         self.t_pieces = pieces_true
         
