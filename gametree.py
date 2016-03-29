@@ -14,7 +14,7 @@ class GameTree(object):
         self.depth=depth#maximum depth of the tree search. Increase for better AI, decrease for time improvement
     def move(self):
         '''navigate the game tree to come up with best configuration, return that gamestate'''
-        possibilities=self.current.successors()
+        possibilities=min_order(self.current)
         if len(possibilities)==0:
             #case of no valid moves
             return self.current.value()
@@ -41,7 +41,7 @@ class GameTree(object):
         #evaluates the value of chosing each child in the gametree by considering up to debth nodes beneath it.
         if depth==0:
             return state.value()
-        possibilities=state.successors()
+        possibilities=min_order(state)
         if len(possibilities)==0:
             #case of no valid moves
             return state.value()
@@ -60,3 +60,35 @@ class GameTree(object):
                 if value<parent_val:
                     return value
         return value
+    def min_order(self,state,minmax):
+        possibilities=mergeSort(state.successors())
+        return possibilities
+    def mergeSort(self,alist):
+        if len(alist)>1:
+            mid = len(alist)//2
+            lefthalf = alist[:mid]
+            righthalf = alist[mid:]
+            mergeSort(lefthalf)
+            mergeSort(righthalf)
+            i=0
+            j=0
+            k=0
+            while i < len(lefthalf) and j < len(righthalf):
+                if lefthalf[i].value < righthalf[j].value:
+                    alist[k]=lefthalf[i]
+                    i=i+1
+                else:
+                    alist[k]=righthalf[j]
+                    j=j+1
+                k=k+1
+
+            while i < len(lefthalf):
+                alist[k]=lefthalf[i]
+                i=i+1
+                k=k+1
+
+            while j < len(righthalf):
+                alist[k]=righthalf[j]
+                j=j+1
+                k=k+1
+        return alist
