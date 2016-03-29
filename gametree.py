@@ -61,7 +61,7 @@ class GameTree(object):
                     return value
         return value
     def min_order(self,state):
-        minmax=not state.current.turn
+        minmax=not state.turn
         return mergeSort(state.successors(),minmax)
     def mergeSort(self,alist,minmax):
         #if minmax is True, it is smallest to largest. Otherwise it is largest to smallest
