@@ -45,6 +45,9 @@ class Piece(object):
         return self.pos.get_pos()
 
     def check(self, pos, grid):
+        ''' Return a tuple: (move valid? (T/F), position of piece to kill)
+        If the move won't kill any of opponent's pieces, returns (T/F, None)
+        '''
         if pos[0] < 0 or pos[0] >= 9 or pos[1] < 0 or pos[1] >= 10:
             return (False,None)
 
