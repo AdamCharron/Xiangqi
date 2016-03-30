@@ -1,24 +1,35 @@
 from pieces import *
 from state_representation import *
+
 class GameTree(object):
     '''
-    Class is used to find the best move based on a game tree search with alpha beta pruning.
-    It must be initialized as Gametree(gamestate,debth) where gamestate is a game object
-    representing current game state and debth is the debth of the tree you wish to search in.
-    It's finction is a move functions (GameTree.move()) which returns the best move as
-    [row,column] (i.e. ['a',5]). The heuristic function must be externally overwritten
-    If no move improves our position, it will recomend a pass returning ['pass',-1]
+    Class is used to find the best move based on a game tree search with
+    alpha beta pruning. It must be initialized as Gametree(gamestate,debth)
+    where gamestate is a game object representing current game state and debth
+    is the debth of the tree you wish to search in. It's finction is a move
+    functions (GameTree.move()) which returns the best move as [row,column]
+    (i.e. ['a',5]). The heuristic function must be externally overwritten.
+
+    If no move improves our position, it will recomend a pass returning
+    ['pass',-1]
     '''
-    def __init__ (self,gamestate, depth):
+
+    def __init__ (self, gamestate, depth):
         self.current = gamestate
-        self.depth = depth#maximum depth of the tree search. Increase for better AI, decrease for time improvement
+        self.depth = depth
+        # Maximum depth of the tree search.
+        # Increase for better AI, decrease for time improvement
         
+
     def move(self):
-        '''navigate the game tree to come up with best configuration, return that gamestate'''
+        '''navigate the game tree to come up with best configuration,
+        return that gamestate'''
+        
         possibilities = min_order(self.current)
         if len(possibilities) == 0:
             #case of no valid moves
             return self.current.value()
+        
         value = float("inf")
         choice = "no moves"
         if gamestate.turn:
@@ -43,10 +54,12 @@ class GameTree(object):
         #evaluates the value of chosing each child in the gametree by considering up to debth nodes beneath it.
         if depth == 0:
             return state.value()
+        
         possibilities = min_order(state)
         if len(possibilities) == 0:
             #case of no valid moves
             return state.value()
+        
         if state.turn:
             value = -float("inf")
             for child in possibilities:

@@ -2,17 +2,19 @@ from gametree import *
 from pieces import *
 
 class Gamestate(object):
+    
     def __init__(self, pieces_true, pieces_false, turn, previous_piece, new_piece):
         # Pieces of the true player is an array of Piece objects
         self.t_pieces = pieces_true
         
         # Defines if it is player True or False's turn,
         # Player True tries to maximize value, False minimizes value
-        self.turn=turn#False Player is Black, True Player is Red
-        self.f_pieces = pieces_false#pieces held by False player
+        self.turn = turn # False Player is Black, True Player is Red
+        self.f_pieces = pieces_false # Pieces held by False player
         self.move = (previous_piece, new_piece) # Original piece and new piece
-        self.won = self.__pincus_winner__()#1 if True won, -1 if False Won, 0 if no winner yet
-        self.grid = self.__make_grid__()#contains a gamegrid of the current representation
+        self.won = self.__pincus_winner__()# 1 if True won, -1 if False Won, 0 if no winner yet
+        self.grid = self.__make_grid__()# Contains a gamegrid of the current representation
+
         
     def successors(self):
         #successors returns all possible next gamestates from this gamestate
@@ -42,6 +44,8 @@ class Gamestate(object):
                     new_pieces[i] = possibility
                     successor.append(Gamestate(t_pieces, new_pieces, True, self.f_pieces[i], possibility))
         return successor
+    
+    
     def value(self):
         #Returns the value of this gamestate (note True wishes to maximize value and False to minimizes
         #returns a value in range negative infinity to infinity
@@ -60,8 +64,15 @@ class Gamestate(object):
             val_T += piece.get_value()
         for piece in self.f_pieces:
             val_F += piece.get_value()
-        return (val_T+offset) / (val_F+offset) #the more pieces we lose, the more valuable the ones we have
-                           #are. The more pieces the oponent loses, the more value the ones he has.
+        return (val_T + offset) / (val_F + offset)
+        ''' The more pieces we lose, the more valuable the ones we are.
+            The more pieces the oponent loses, the more value the ones he has.
+            This should create a more offensive behaviour for the winning side,
+            and a more defensive one for the losing side.
+            
+            Will test to see if this is an effective reaction method.
+        '''
+
     
     def __make_grid__(self):
         #makes a GameGrid matrix using all the pieces names
@@ -70,9 +81,13 @@ class Gamestate(object):
         for piece in self.t_pieces + self.f_pieces:
             grid[piece.pos.x][piece.pos.y] = piece.name
         return grid
+
     
     def __pincus_winner__(self):
-        #returns 1 if player True won, returns -1 if player False won, returns 0 if game continues
+        # Returns 1 if player True won
+        # Returns -1 if player False won
+        # Returns 0 if game continues
+        
         flag_True = 0
         for piece in self.t_pieces:
             if type(piece) == General:
@@ -84,4 +99,3 @@ class Gamestate(object):
             if type(piece) == General:
                 return 0
         return 1
-

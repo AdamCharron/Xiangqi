@@ -23,8 +23,6 @@ Chariot (R) - move and capture any distance orthogonally (essentially rook)
 Cannon (C) - move any distance orthogonally without jumping over any pieces
            - capture by jumping over exactly one piece in the line of fire (any
            orthogonal range, but must only have one piece ("screen") in the way)
-???        - Cannons can be exchanged for horses immediately from their
-           starting positions (?????????WAT???????)
 
 Soldier (S) - cannot move backwards or diagonally
             - before river, can only move/capture one space forward at a time
