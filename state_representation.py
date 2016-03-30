@@ -14,13 +14,14 @@ class Gamestate(object):
         self.move = (previous_piece, new_piece) # Original piece and new piece
         self.won = self.__pincus_winner__()# 1 if True won, -1 if False Won, 0 if no winner yet
         self.grid = self.__make_grid__()# Contains a gamegrid of the current representation
+        print(self.grid)
 
         
     def successors(self):
         #successors returns all possible next gamestates from this gamestate
         successor = list()
         if self.turn:
-            print(self.grid)
+            #print(self.grid)
             for i in range(len(self.t_pieces)):
                 for (possibility, eliminate_name) in self.t_pieces[i].successors(self.grid):
                     # Shallow copy: new array with pointers to old objects
@@ -82,6 +83,9 @@ class Gamestate(object):
         # of that piece if occupied
         grid=[[0]*10]*9
         for piece in self.t_pieces + self.f_pieces:
+            print(piece.name)
+            print(piece.pos.x)
+            print(piece.pos.y)
             grid[piece.pos.x][piece.pos.y] = piece.name
         return grid
 

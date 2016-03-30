@@ -246,7 +246,7 @@ def main():
     # Player 1 will be Red (True), Player 2 will be Black (False)
     newgame = Gamestate(redpieces, blackpieces, True, None, None)
     #print(newgame.grid)
-    print_board_2(update_board_2(newgame.t_pieces + newgame.f_pieces))
+    #print_board_2(update_board_2(newgame.t_pieces + newgame.f_pieces))
     #print(newgame.successors())
 
     # OK FROM THE ABOVE 3 LINES, THE FOLLOWING ISSUE OCCURRED:
