@@ -90,12 +90,14 @@ class Gamestate(object):
         
         flag_True = 0
         for piece in self.t_pieces:
-            if type(piece) == General:
+            #if type(piece) == General:
+            if piece.name.split('.')[1].lower() == 'general':
                 flag_True = 1
                 break
         if flag_True == 0:
             return -1
         for piece in self.f_pieces:
-            if type(piece) == General:
+            #if type(piece) == General:
+            if piece.name.split('.')[1].lower() == 'general':
                 return 0
         return 1

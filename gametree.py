@@ -84,7 +84,7 @@ class GameTree(object):
     
     def mergeSort(self, alist, minmax):
         #if minmax is True, it is smallest to largest. Otherwise it is largest to smallest
-        if minmax
+        if minmax:
             if len(alist) > 1:
                 mid = len(alist) // 2
                 lefthalf = alist[:mid]
