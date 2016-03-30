@@ -243,7 +243,7 @@ def print_board_2(board):
             col += 1
         row += 1
         print(s)
-    print("\n")
+    #print("\n")
 
 
 
@@ -314,17 +314,148 @@ def main():
 
     # Build initial Gamestate
     # Player 1 will be Red (True), Player 2 will be Black (False)
-    newgame = Gamestate(redpieces, blackpieces, True, None, None)
+    current_state = Gamestate(redpieces, blackpieces, True, None, None)
     #print_board_2(update_board_from_pieces(newgame.t_pieces + newgame.f_pieces))
     #print_board_2(update_board_from_grid(newgame.grid))
 
     game_over = False
     while not game_over:
 
+        if current_state.turn:
+            if AI1_on:
+                # Deal with AI and such as
+                print("7")
+            else:
+                # Player move
+                while True:
+                    input_move = str(input("\nPlayer 1's move. Please enter the piece name and next location. Type \"help\" for help, type \"print\" to print the game board: "))
+                    if input_move == "help":
+                        print("\n------------------------------------- HELP -------------------------------------\nThe move should be of the following form:\n\t- 3 char piece code: [colour][piece name][piece number]\n\t- Tuple location to move that piece (x,y)\n\t(Same line, separated by a space)\n\nThe colour is either 'R' or 'B' for each player\n\nThe piece names are as follows:\n\t- G = general\n\t- A = advisor\n\t- E = elephant\n\t- H = horse\n\t- R = chariot\n\t- C = cannon\n\t- S = soldier\n\nPiece number is the number of that piece from each type (see grid)\n\nThe position to which this piece moves will be inputted as a set of coordinates in the form \"(x,y)\".\nIt should be noted that the board's origin is at the bottom left corner, and it the baord dimensions are 10x9\nIndexing begins at 0, so the point (3,2) corresponds to the 4th column and 3rd row of the grid\n\nThe grid can be printed by typing \"print\" \n\nAn example of a piece movement from initial state is: \"RA0  (4,1)\"\n--------------------------------------------------------------------------------\n")
+                    elif input_move == "print":
+                        print("\n------------------------------------- PRINT ------------------------------------\n")
+                        print_board_2(update_board_from_grid(current_state.grid))
+                        print("\n--------------------------------------------------------------------------------\n")
+                    else:
+                        move_setup = input_move.split(" ")
+                        if len(move_setup) != 2:
+                            print("Invalid length of input string. Try again.\n")
+                            continue
+                        if len(move_setup[0]) != 3:
+                            print("Invalid length of piece code string. Try again.\n")
+                            continue
+                        if len(move_setup[1]) != 5:
+                            print("Invalid length of coordinate string. Try again.\n")
+                            continue
 
+                        if move_setup[1][0] != "(" or move_setup[1][4] != ")" or move_setup[1][2] != ",":
+                            print("Invalid coordinate input format. Try again. Type \"help\" for help.")
+                        
+                        tempcolour = move_setup[0][0].upper()
+                        tempname = move_setup[0][1].upper()
+                        tempnumber = str(move_setup[0][2])
+                        tempx = str(move_setup[1][1])
+                        tempy = str(move_setup[1][3])
+                        piecename = ""
+                        coord = [-1, -1]
 
-        
-    
+                        # Verify colour code
+                        if tempcolour == "B":
+                            if current_state.turn:
+                                print("Cannot move an opponent's pieces.")
+                                continue
+                            piecename += "black."
+                        elif tempcolour == "R":
+                            if not current_state.turn:
+                                print("Cannot move an opponent's pieces.")
+                                continue
+                            piecename += "red."
+                        else:
+                            print("Invalid colour code. Must be 'R' or 'B'")
+                            continue
+
+                        # Verfiy piece name and piece number
+                        if tempname == "G":
+                            piecename += "general."
+                            if tempnumber != "0":
+                                print("Invalid piece number. Must be 0 for general. Type \"print\" to print game board")
+                                continue
+                        elif tempname == "A":
+                            piecename += "advisor."
+                            if tempnumber not in ["0", "1"]:
+                                print("Invalid piece number. Must be 0 or 1 for advisor. Type \"print\" to print game board")
+                                continue
+                        elif tempname == "E":
+                            piecename += "elephant."
+                            if tempnumber not in ["0", "1"]:
+                                print("Invalid piece number. Must be 0 or 1 for elephant. Type \"print\" to print game board")
+                                continue
+                        elif tempname == "H":
+                            piecename += "horse."
+                            if tempnumber not in ["0", "1"]:
+                                print("Invalid piece number. Must be 0 or 1 for horse. Type \"print\" to print game board")
+                                continue
+                        elif tempname == "R":
+                            piecename += "chariot."
+                            if tempnumber not in ["0", "1"]:
+                                print("Invalid piece number. Must be 0 or 1 for chariot. Type \"print\" to print game board")
+                                continue
+                        elif tempname == "C":
+                            piecename += "cannon."
+                            if tempnumber not in ["0", "1"]:
+                                print("Invalid piece number. Must be 0 or 1 for cannon. Type \"print\" to print game board")
+                                continue
+                        elif tempname == "S":
+                            piecename += "soldier."
+                            if tempnumber not in ["0", "1", "2", "3", "4"]:
+                                print("Invalid piece number. Must be 0, 1, 2, 3, or 4 for soldier. Type \"print\" to print game board")
+                                continue
+                        else:
+                            print("Invalid piece name. Type \"help\" for help.")
+                            continue
+                        piecename += tempnumber
+
+                        # Verify coordinate
+                        if tempx >= "0" and tempx <= "9":
+                            coord[0] = int(tempx)
+                        else:
+                            print("Invalid x coordinate. Must be from 0 to 9")
+                            continue
+
+                        if tempy >= "0" and tempy <= "8":
+                            coord[1] = int(tempy)
+                        else:
+                            print("Invalid y coordinate. Must be from 0 to 8")
+                            continue
+                        coord = tuple(coord)
+
+                        # Now find the piece, and make sure this is a valid move
+                        validMoveFlag = False
+                        nextpiece = None
+                        for piece in total_pieces:
+                            if piece.name == piecename:
+                                for newpiece in piece.successors(current_state.grid):
+                                    if coord == Position(newpiece[0]):
+                                        validMoveFlag = True
+                                        nextpiece = newpiece[0]
+                                        break
+                                if validMoveFlag:
+                                    break
+                        if not validMoveFlag:
+                            print("Invalid move for this piece.")
+                            continue
+                        
+                            
+        else:
+            if AI2_on:
+                # Deal with AI and such as
+                print("7")
+            else:
+                # Player move
+                print("8")
+        current_state.turn = not current_state.turn     # Alternate turns
+        if current_state.won != 0:
+            # someone won. Yay. deal with it.
+            game_over = True
     
     return
 
