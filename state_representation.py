@@ -81,7 +81,7 @@ class Gamestate(object):
         # Makes a GameGrid matrix using all the pieces names
         # Grid is populated with 0 if that space is empty or with the name
         # of that piece if occupied
-        grid=[[0]*10]*9
+        grid=[[0]*10 for _ in range(9)]
         for piece in self.t_pieces + self.f_pieces:
             print(piece.name)
             print(piece.pos.x)
