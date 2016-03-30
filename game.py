@@ -179,7 +179,108 @@ def print_board_2(board):
             col += 1
         row += 1
         print(s)
+    print("\n")
 
 
-print_board_2(update_board_2(total_pieces))
-#newgame = Gamestate(redpieces, blackpieces, True, redpieces[0], redpieces[1])
+
+def main():
+    #print_board_2(update_board_2(total_pieces))
+
+
+    # AI1_on and AI2_on are boolean values indicating which AI's to turn on
+    # When both AI_on = False, it is human player vs human player
+    # When both AI_on = True, it is AI vs AI (can set some parameters)
+    # When one AI_on = True and the other is False, it is human player vs AI
+
+    # Get the number of human players
+    while True:
+        number_of_human_players = input("Enter the number of human players (0, 1, or 2): ")
+        if len(number_of_human_players) != 1:
+            print("Invalid number of human players. There can only be 0, 1, or 2.\n")
+            continue
+        if number_of_human_players == '1':
+            print("Beginning the game with 1 human player against an AI\n")
+            AI1_on = True
+            AI2_on = False
+            break
+        elif number_of_human_players == '2':
+            print("Beginning the game with 2 human players facing off\n")
+            AI1_on = False
+            AI2_on = False
+            break
+        elif number_of_human_players == '0':
+            print("Beginning the game with 2 AIs facing off\n")
+            AI1_on = True
+            AI2_on = True
+            break
+        else:
+            print("Invalid number of human players. There can only be 0, 1, or 2.\n")
+
+    #number_of_human_players = int(number_of_human_players)
+
+    # Can set an input depth for each AI in this module, or through user input
+    #input_depth1 = 5   # Arbitrary default value
+    #input_depth2 = 5   # Arbitrary default value
+    if AI1_on:
+        while True:
+            input_depth1 = input("Select the desired search depth for AI1: ")
+            if len(input_depth1) != 1 or input_depth1 <= '0' or input_depth1 > '9':
+                print("Invalid depth. Needs to be between 0 and 9.\n")
+                continue
+            break
+    if AI2_on:
+        while True:
+            input_depth2 = input("Select the desired search depth for AI2: ")
+            if len(input_depth2) != 1 or input_depth2 <= '0' or input_depth2 > '9':
+                print("Invalid depth. Needs to be between 0 and 9.\n")
+                continue
+            break
+
+
+
+    # WILL SEE LATER WHAT ELSE MAY NEED TO BE INPUTTED AS PARAMETERS FOR EACH AI
+
+
+
+    # Build initial Gamestate
+    # Player 1 will be Red (True), Player 2 will be Black (False)
+    newgame = Gamestate(redpieces, blackpieces, True, None, None)
+    print_board_2(update_board_2(newgame.t_pieces + newgame.f_pieces))
+    print(newgame.successors())
+
+    # OK FROM THE ABOVE 3 LINES, THE FOLLOWING ISSUE OCCURRED:
+    '''
+    Print_board_2 line works fine which means it was probably initialized fine
+    But, when i called newgame.successors(), it returned the following list:
+
+    [['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
+    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1']]
+
+    Needless to say, this is not correct.
+    The only things being called right now is the successors function from
+    state_representation.
+    Why are the pieces not only not where they should be in this array,
+           ie: chariot and cannon are not in the same row OR column, 
+    but also why is the entire thing just this same repeated row/col throughout
+    the entire grid?
+    '''
+
+    # SECOND, POSSIBLY RELATED ISSUE:
+    # When emerson uses his barrage of:
+    #      if temp.name.strip('.')[0].lower() == .....
+    # lines, in pieces.py there are errors. This is cause temp is grid[x][y]
+    # Emerson treats grid as a nested array of Pieces, but the grid that Camilo
+    # passes to him is a nested array of the piece's names only.
+    # This causes a metric butt-fuck ton of errors in Emerson's code. 
+    
+    
+    return
+
+main()

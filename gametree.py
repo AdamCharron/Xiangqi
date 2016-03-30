@@ -4,9 +4,9 @@ from state_representation import *
 class GameTree(object):
     '''
     Class is used to find the best move based on a game tree search with
-    alpha beta pruning. It must be initialized as Gametree(gamestate,debth)
-    where gamestate is a game object representing current game state and debth
-    is the debth of the tree you wish to search in. It's finction is a move
+    alpha beta pruning. It must be initialized as Gametree(gamestate,depth)
+    where gamestate is a game object representing current game state and depth
+    is the depth of the tree you wish to search in. It's function is a move
     functions (GameTree.move()) which returns the best move as [row,column]
     (i.e. ['a',5]). The heuristic function must be externally overwritten.
 

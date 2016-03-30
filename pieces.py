@@ -327,6 +327,7 @@ class Chariot(Piece):
         
         for i in range(self.pos.x+1,9): # Right
             temp = grid[i][self.pos.y]
+            print(temp)
             if not temp:
                 possibilities.append( (i,self.pos.y) )
             else:
