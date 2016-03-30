@@ -17,6 +17,7 @@ class GameTree(object):
     def __init__ (self, gamestate, depth):
         self.current = gamestate
         self.depth = depth
+        self.implement_minsort=False
         # Maximum depth of the tree search.
         # Increase for better AI, decrease for time improvement
         
@@ -78,7 +79,9 @@ class GameTree(object):
 
     
     def min_order(self,state):
-        minmax = not state.turn
+        if not self.implement_minsort:
+            return state.successors()
+        minmax = not state.tur
         return mergeSort(state.successors(), minmax)
 
     
