@@ -83,9 +83,9 @@ class Gamestate(object):
         # of that piece if occupied
         grid=[[0]*10 for _ in range(9)]
         for piece in self.t_pieces + self.f_pieces:
-            print(piece.name)
-            print(piece.pos.x)
-            print(piece.pos.y)
+            #print(piece.name)
+            #print(piece.pos.x)
+            #print(piece.pos.y)
             grid[piece.pos.x][piece.pos.y] = piece.name
         return grid
 

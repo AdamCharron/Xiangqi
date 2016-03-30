@@ -55,9 +55,8 @@ Potential Move Notation:
 [piece name] ([former rank][former file])-([new rank][new file])
 '''
 
-# EMERSON: this is not to undo/undermine your code, just didn't wanna write
-# over it, so copied what you had initially to lazily print off the board.
-def update_board_2(total_pieces):
+
+def update_board_from_pieces(total_pieces):
     ''' This function takes in a list of all the pieces as a parameter, and
         abbreviates their colours, names, and numbers before storing them all
         into a nested array game board, which is then returned.
@@ -115,6 +114,71 @@ def update_board_2(total_pieces):
             # Store this simple name in the board
             board[piece.pos.x][piece.pos.y] = tempcolour + tempname + tempnumber
             #print("Name: {}, abbreviated: {}".format(piece.name, board[piece.pos.x][piece.pos.y]))
+    return board
+
+
+
+def update_board_from_grid(grid):
+    ''' This function takes in a the existing grid as a parameter, and
+        abbreviates all pieces' colours, names, and numbers before storing them
+        into a nested array game board, which is then returned.
+
+        For example, "red.general.0" becomes "RG0".
+        
+        This is more or less a helper function for the print function below.
+    '''
+    
+    board = [[0]*10 for _ in range(9)]
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            piece = str(grid[i][j])
+            if piece != '0':
+                tempcolour = piece.split('.')[0].lower()
+                tempname = piece.split('.')[1].lower()
+                tempnumber = piece.split('.')[2]
+
+                # Get abbreviated colour code
+                if tempcolour == "red":
+                    tempcolour = "R"
+                elif tempcolour == "black":
+                    tempcolour = "B"
+                else:
+                    raise("Invalid Colour: ")
+                    print(tempcolour)
+                    return -1
+
+                # Get abbreviated name code
+                # NOTE: Chariot is 'R' because it is pretty much a rook and 'C' was
+                #       already taken by Cannon
+                if tempname == "general":
+                    tempname = "G"
+                elif tempname == "advisor":
+                    tempname = "A"
+                elif tempname == "elephant":
+                    tempname = "E"
+                elif tempname == "horse":
+                    tempname = "H"
+                elif tempname == "chariot":
+                    tempname = "R"
+                elif tempname == "cannon":
+                    tempname = "C"
+                elif tempname == "soldier":
+                    tempname = "S"
+                else:
+                    raise("Invalid Name: ")
+                    print(tempname)
+                    return -1
+
+                # Make sure number code is valid
+                if tempnumber[0] < '0' or tempnumber[0] > '4':
+                    raise("Invalid Number: ")
+                    print(tempname)
+                    return -1
+
+                # Append the codes into a string for the simple name
+                # Store this simple name in the board
+                board[i][j] = tempcolour + tempname + tempnumber
+                #print("Name: {}, abbreviated: {}".format(piece.name, board[piece.pos.x][piece.pos.y]))
     return board
 
 
@@ -245,9 +309,10 @@ def main():
     # Build initial Gamestate
     # Player 1 will be Red (True), Player 2 will be Black (False)
     newgame = Gamestate(redpieces, blackpieces, True, None, None)
-    #print(newgame.grid)
-    #print_board_2(update_board_2(newgame.t_pieces + newgame.f_pieces))
-    #print(newgame.successors())
+    #print_board_2(update_board_from_pieces(newgame.t_pieces + newgame.f_pieces))
+    #print_board_2(update_board_from_grid(newgame.grid))
+
+    print(newgame.successors())
 
     # OK FROM THE ABOVE 3 LINES, THE FOLLOWING ISSUE OCCURRED:
     '''
