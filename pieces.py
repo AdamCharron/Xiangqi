@@ -332,10 +332,10 @@ class Chariot(Piece):
                 possibilities.append( (i,self.pos.y) )
             else:
                 if self.color:
-                    if temp.name.strip('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (i,self.pos.y) )
                 else:
-                    if temp.name.strip('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (i,self.pos.y) )
                 break
 
@@ -345,10 +345,10 @@ class Chariot(Piece):
                 possibilities.append( (i,self.pos.y) )
             else:
                 if self.color:
-                    if temp.name.strip('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (i,self.pos.y) )
                 else:
-                    if temp.name.strip('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (i,self.pos.y) )
                 break
 
@@ -358,10 +358,10 @@ class Chariot(Piece):
                 possibilities.append( (self.pos.x,j) )
             else:
                 if self.color:
-                    if temp.name.strip('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (self.pos.x,j) )
                 else:
-                    if temp.name.strip('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (self.pos.x,j) )
                 break
 
@@ -371,10 +371,10 @@ class Chariot(Piece):
                 possibilities.append( (self.pos.x,j) )
             else:
                 if self.color:
-                    if temp.name.strip('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (self.pos.x,j) )
                 else:
-                    if temp.name.strip('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (self.pos.x,j) )
                 break
 
@@ -409,10 +409,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.name.strip('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (i,self.pos.y) )
                     else:
-                        if temp.name.strip('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (i,self.pos.y) )
                     break
 
@@ -430,10 +430,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.name.strip('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (i,self.pos.y) )
                     else:
-                        if temp.name.strip('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (i,self.pos.y) )
                     break
 
@@ -451,10 +451,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.name.strip('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (self.pos.x,j) )
                     else:
-                        if temp.name.strip('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (self.pos.x,j) )
                     break
 
@@ -472,10 +472,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.name.strip('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (self.pos.x,j) )
                     else:
-                        if temp.name.strip('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (self.pos.x,j) )
                     break
 
