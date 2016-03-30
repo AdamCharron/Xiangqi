@@ -482,12 +482,12 @@ class Cannon(Piece):
         for poss in move_poss:
             retval = self.check(poss, grid)
             if retval[0] and not retval[1]: # Didn't land on anything
-                ret_pieces.append( (Cannon(Position(possibility[0],possibility[1]),self.color,self.name) , retval[1]) )
+                ret_pieces.append( (Cannon(Position(poss[0],poss[1]),self.color,self.name) , retval[1]) )
 
         for poss in attack_poss:
             retval = self.check(poss, grid)
             if retval[0] and retval[1]: # Killed something
-                ret_pieces.append( (Cannon(Position(possibility[0],possibility[1]),self.color,self.name) , retval[1]) )
+                ret_pieces.append( (Cannon(Position(poss[0],poss[1]),self.color,self.name) , retval[1]) )
 
         return ret_pieces
 
