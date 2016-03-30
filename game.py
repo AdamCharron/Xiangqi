@@ -257,7 +257,15 @@ def main():
     # When one AI_on = True and the other is False, it is human player vs AI
 
     # Get the number of human players
+    sarcastic_count = 0
     while True:
+        sarcastic_count += 1
+        if sarcastic_count > 7:
+            print("...Really? -_- Just type '0', '1', or '2'. Jesus Christ.\n")
+        elif sarcastic_count > 3:
+            print("Come on. This is not hard. You're better than this.\n")
+            
+        
         number_of_human_players = input("Enter the number of human players (0, 1, or 2): ")
         if len(number_of_human_players) != 1:
             print("Invalid number of human players. There can only be 0, 1, or 2.\n")
@@ -280,11 +288,9 @@ def main():
         else:
             print("Invalid number of human players. There can only be 0, 1, or 2.\n")
 
-    #number_of_human_players = int(number_of_human_players)
-
     # Can set an input depth for each AI in this module, or through user input
-    #input_depth1 = 5   # Arbitrary default value
-    #input_depth2 = 5   # Arbitrary default value
+    input_depth1 = 5   # Arbitrary default value
+    input_depth2 = 5   # Arbitrary default value
     if AI1_on:
         while True:
             input_depth1 = input("Select the desired search depth for AI1: ")
@@ -312,39 +318,12 @@ def main():
     #print_board_2(update_board_from_pieces(newgame.t_pieces + newgame.f_pieces))
     #print_board_2(update_board_from_grid(newgame.grid))
 
-    print(newgame.successors())
+    game_over = False
+    while not game_over:
 
-    # OK FROM THE ABOVE 3 LINES, THE FOLLOWING ISSUE OCCURRED:
-    '''
-    Print_board_2 line works fine which means it was probably initialized fine
-    But, when i called newgame.successors(), it returned the following list:
 
-    [['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1'],
-    ['red.chariot.1', 0, 'red.cannon.1', 'red.soldier.4', 0, 0, 'black.soldier.4', 'black.cannon.1', 0, 'black.chariot.1']]
 
-    Needless to say, this is not correct.
-    The only things being called right now is the successors function from
-    state_representation.
-    Why are the pieces not only not where they should be in this array,
-           ie: chariot and cannon are not in the same row OR column, 
-    but also why is the entire thing just this same repeated row/col throughout
-    the entire grid?
-    '''
-
-    # SECOND, POSSIBLY RELATED ISSUE:
-    # When emerson uses his barrage of:
-    #      if temp.name.strip('.')[0].lower() == .....
-    # lines, in pieces.py there are errors. This is cause temp is grid[x][y]
-    # Emerson treats grid as a nested array of Pieces, but the grid that Camilo
-    # passes to him is a nested array of the piece's names only.
-    # This causes a metric butt-fuck ton of errors in Emerson's code. 
+        
     
     
     return
