@@ -288,12 +288,17 @@ def format_input(input_str, turn):
         print("Try again. Type \"help\" for help if needed.")
         return -1, -1
 
+    if input_str[1][0] != "(" or input_str[1][4] != ")" or input_str[1][2] != ",":
+        print("Incorrect formatting for the inputted coordinates.")
+        print("Try again. Type \"help\" for help if needed.")
+        return -1, -1
+
     # The lengths are good, now checking for valid input and building piecename
     tempcolour = input_str[0][0].upper()
     tempname = input_str[0][1].upper()
     tempnumber = str(input_str[0][2])
-    tempx = str(input_str[1][0])
-    tempy = str(input_str[1][1])
+    tempx = str(input_str[1][1])
+    tempy = str(input_str[1][3])
     piecename = ""
     coord = []
 
@@ -394,16 +399,51 @@ def format_input(input_str, turn):
     return [piecename, coord]
 
 
-def player_move():
+def player_move(piecename, coords, current_state):
+    ''' Takes as input the piecename and coords determined in format_input for
+    the piece being moved, as well as the current state of the game.
+    Will check if the move is possible.
+    If so it will return the gamestate after this move has been made.
+    If not it will return None.
+    '''
 
+    if current_state.turn:
+        foundFlag = False
+        for piece in current_state.t_pieces:
+            if piece.name == piecename:
+                foundFlag = True
+                results = piece.check(tuple(coords), current_state.grid)
+                if not results[0]:  # Not a valid move
+                    return None
+                else:   # Valid move
+                    if results[1]:  # Eliminate an opponent's piece
+                        for i in range(len(current_state.f_pieces)):
+                            if current_state.f_pieces[i].name == results[1]:
+                                current_state.f_pieces.remove(current_state.f_pieces[i])
+                    return current_state
+        print("Invalid move. Tried to move a piece that is no longer in play.")
+        return None
 
-    return gamestate
+    else:
+        foundFlag = False
+        for piece in current_state.f_pieces:
+            if piece.name == piecename:
+                foundFlag = True
+                results = piece.check(tuple(coords), current_state.grid)
+                if not results[0]:  # Not a valid move
+                    return None
+                else:   # Valid move
+                    if results[1]:  # Eliminate an opponent's piece
+                        for i in range(len(current_state.t_pieces)):
+                            if current_state.t_pieces[i].name == results[1]:
+                                current_state.t_pieces.remove(current_state.t_pieces[i])
+                    return current_state
+        print("Invalid move. Tried to move a piece that is no longer in play.")
+        return None
 
 
 def main():
-    #print_board_2(update_board_2(total_pieces))
-
-
+    
     # AI1_on and AI2_on are boolean values indicating which AI's to turn on
     # When both AI_on = False, it is human player vs human player
     # When both AI_on = True, it is AI vs AI (can set some parameters)
@@ -471,12 +511,20 @@ def main():
     #print_board_2(update_board_from_pieces(newgame.t_pieces + newgame.f_pieces))
     #print_board_2(update_board_from_grid(newgame.grid))
 
-    game_over = False
-    while not game_over:
+    while True:
+
+        # End the function when one player (or AI) wins
+        if current_state.won == 1:
+            print("\n\nThe game has been by the Red player!")
+            return
+        elif current_state.won == -1:
+            print("\n\nThe game has been by the Black player!")
+            return
+        
         if current_state.turn: # Red turn (True)
             if AI1_on:
 
-            else:
+            else:   # Human player
                 input_str = input("\nEnter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
                 temp = format_input(input_str, current_state.turn)
                 piecename = temp[0]
@@ -495,7 +543,13 @@ def main():
                     print("-------------------------------- PRINT ------------------------------- ")
                     continue
                 else:
-
+                    test = player_move(piecename, coords, current_state)
+                    if test == None:
+                        print("Invalid move. This piece is unable to go to the desired location.")
+                        continue
+                    else:
+                        # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
+                        current_state = test
 
                     
         else:   # Black turn (False)
@@ -520,8 +574,16 @@ def main():
                     print("-------------------------------- PRINT ------------------------------- ")
                     continue
                 else:
-                
-                
+                    test = player_move(piecename, coords, current_state)
+                    if test == None:
+                        print("Invalid move. This piece is unable to go to the desired location.")
+                        continue
+                    else:
+                        # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
+                        current_state = test
+                        
+            #current_state.turn = not current_state.turn
+            #current_state = Gamestate(t_pieces, f_pieces, not current_state.turn, )
     return
 
 main()
