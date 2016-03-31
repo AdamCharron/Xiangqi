@@ -559,9 +559,12 @@ def main():
         # Take in next move
         if current_state.turn: # Red turn (True)    
             if AI1_on:
+                print("AI 1 starting game tree stuff")
                 gametree = GameTree(current_state, int(input_depth1))
-                current_state = gametree.move()
-                print("Player 1 current state: {}".format(current_state))
+                test = gametree.move()
+                if test != "no moves":
+                    current_state = test
+                    print("Player 1 current state: {}".format(current_state))
                 continue
 
             else:   # Human player
@@ -603,9 +606,11 @@ def main():
         else:   # Black turn (False)
             if AI2_on:
                 print("AI 2 starting game tree stuff")
-                gametree = GameTree(current_state, int(input_depth2))
-                current_state = gametree.move()
-                print("Player 2 current state: {}".format(current_state))
+                gametree = GameTree(current_state, int(input_depth1))
+                test = gametree.move()
+                if test != "no moves":
+                    current_state = test
+                    print("Player 2 current state: {}".format(current_state))
                 continue
                 
             else:   # Human player

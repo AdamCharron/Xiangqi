@@ -48,6 +48,10 @@ class Piece(object):
         ''' Return a tuple: (move valid? (T/F), position of piece to kill)
         If the move won't kill any of opponent's pieces, returns (T/F, None)
         '''
+        # K the issue is something from camilo's code is calling this method
+        # with position as [(x,y)]. So it tries to compare tuple() to int().
+        # Need to find out where this is an make sure it sends a tuple as pos
+        # paramter, not a one element list tuple
         if pos[0] < 0 or pos[0] >= 9 or pos[1] < 0 or pos[1] >= 10:
             return (False,None)
 
