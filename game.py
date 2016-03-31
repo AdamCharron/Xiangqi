@@ -427,7 +427,8 @@ def player_move(piecename, coords, current_state):
                                 if elim_piece.name == successor[1]:
                                     F.remove(elim_piece)
                                     break
-                        newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                        #newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                        newpiece = successor[0]
                         T = current_state.t_pieces[:]
                         T.remove(piece)
                         T.append(newpiece)
@@ -448,7 +449,8 @@ def player_move(piecename, coords, current_state):
                                 if elim_piece.name == successor[1]:
                                     T.remove(elim_piece)
                                     break
-                        newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                        #newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                        newpiece = successor[0]
                         F = current_state.f_pieces[:]
                         F.remove(piece)
                         F.append(newpiece)
@@ -655,21 +657,3 @@ def main():
     return
 
 main()
-
-
-
-
-'''
-K WHERE THINGS STAND NOW (OUTSTANDING ISSUES):
-
-1) Horse blocking does not work (if something is right in fron of the horse, it
-   will not be blocked even though it should.
-2) Nothing stopping advisors from facing each other
-3) Nothing stopping elephant from crossing the river
-4) Nothing stopping the general or advisors from leaving the tent
-5) Rook can jump over pretty much anything (I believe all pieces can jump)
-
-Nevermind. Pieces can literally go anywhere...
-
-WHERE ARE THE PIECE CONSTRAINTS HANDLED?
-'''
