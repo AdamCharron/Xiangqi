@@ -650,3 +650,14 @@ def main():
     return
 
 main()
+
+
+'''
+CURRENT STATE:
+
+- Pvp seems to run fine :)
+- Issues arise with the AI. It seems to be taking an unfathomably long time to
+  run with the move() function, even at depth 1.
+
+- 
+'''
