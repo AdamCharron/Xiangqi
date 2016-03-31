@@ -38,6 +38,8 @@ class Gamestate(object):
             for i in range(len(self.f_pieces)):
                 for (possibility, eliminate_name) in self.f_pieces[i].successors(self.grid):
                     new_pieces = self.f_pieces[:]
+                    new_pieces[i] = possibility     # Added this and next line
+                    t_pieces = self.t_pieces        # Wanted to be sure, but looks like they were just forgotten
                     if eliminate_name != None:
                         t_pieces = self.t_pieces[:]
                         for piece in t_pieces:

@@ -428,7 +428,7 @@ def player_move(piecename, coords, current_state):
                     T.remove(piece)
                     T.append(newpiece)
                     return Gamestate(T, F, not current_state.turn, piece, newpiece)
-        print("Invalid move. Tried to move a piece that is no longer in play.")
+        print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
 
     else:
@@ -445,7 +445,7 @@ def player_move(piecename, coords, current_state):
                         for elim_piece in current_state.t_pieces:
                             if elim_piece.name == results[1]:
                                 T.remove(elim_piece)
-                                current_state.t_pieces.remove(current_state.t_pieces[i])
+                                T.remove(elim_piece)
                     newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
                     F = current_state.f_pieces[:]
                     F.remove(piece)
@@ -478,8 +478,10 @@ def main():
             continue
         if number_of_human_players == '1':
             print("Beginning the game with 1 human player against an AI\n")
-            AI1_on = True
-            AI2_on = False
+            # Let player 1 be human for now, but should be completely arbitrary
+            # and open to swapping at any point
+            AI1_on = False
+            AI2_on = True
             break
         elif number_of_human_players == '2':
             print("Beginning the game with 2 human players facing off\n")
@@ -499,15 +501,17 @@ def main():
     input_depth2 = 5   # Arbitrary default value
     if AI1_on:
         while True:
-            input_depth1 = input("Select the desired search depth for AI1: ")
-            if len(input_depth1) != 1 or input_depth1 <= '0' or input_depth1 > '9':
+            input_depth1 = str(input("Select the desired search depth for AI1: "))
+            #if len(input_depth1) != 1 or input_depth1 <= "0" or input_depth1 > "9":
+            if input_depth1 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 print("Invalid depth. Needs to be between 0 and 9.\n")
                 continue
             break
     if AI2_on:
         while True:
-            input_depth2 = input("Select the desired search depth for AI2: ")
-            if len(input_depth2) != 1 or input_depth2 <= '0' or input_depth2 > '9':
+            input_depth2 = str(input("Select the desired search depth for AI2: "))
+            #if len(input_depth2) != 1 or input_depth2 <= '0' or input_depth2 > '9':
+            if input_depth2 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 print("Invalid depth. Needs to be between 0 and 9.\n")
                 continue
             break
@@ -537,10 +541,12 @@ def main():
             print_board_2(update_board_from_grid(current_state.grid))
             print("\n\nThe game has been won by the Black player!")
             return
+
+        print_board_2(update_board_from_grid(current_state.grid))
         
         if current_state.turn: # Red turn (True)    
             if AI1_on:
-                gametree = GameTree(current_state, input_depth1)
+                gametree = GameTree(current_state, int(input_depth1))
                 current_state = gametree.move()
                 continue
 
@@ -582,7 +588,7 @@ def main():
                     
         else:   # Black turn (False)
             if AI2_on:
-                gametree = GameTree(current_state, input_depth2)
+                gametree = GameTree(current_state, int(input_depth2))
                 current_state = gametree.move()
                 continue
                 
@@ -623,3 +629,13 @@ def main():
     return
 
 main()
+
+
+
+
+'''
+K WHERE THINGS STAND NOW (OUTSTANDING ERRORS):
+
+1) 
+
+'''

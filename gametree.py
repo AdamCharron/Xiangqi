@@ -26,14 +26,15 @@ class GameTree(object):
         '''navigate the game tree to come up with best configuration,
         return that gamestate'''
         
-        possibilities = min_order(self.current)
+        possibilities = self.min_order(self.current)
         if len(possibilities) == 0:
             #case of no valid moves
             return self.current.value()
         
         value = float("inf")
         choice = "no moves"
-        if gamestate.turn:
+        #if gamestate.turn:     # should this be if not self.current.turn ?
+        if not self.current.turn:
             value = -float("inf")
         if self.current.turn:
             for child in possibilities:
@@ -56,7 +57,7 @@ class GameTree(object):
         if depth == 0:
             return state.value()
         
-        possibilities = min_order(state)
+        possibilities = self.min_order(state)
         if len(possibilities) == 0:
             #case of no valid moves
             return state.value()
@@ -82,7 +83,7 @@ class GameTree(object):
         if not self.implement_minsort:
             return state.successors()
         minmax = not state.turn
-        return mergeSort(state.successors(), minmax)
+        return self.mergeSort(state.successors(), minmax)
 
     
     def mergeSort(self, alist, minmax):
