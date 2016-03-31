@@ -58,6 +58,9 @@ class GameTree(object):
             return state.value()
         
         possibilities = self.min_order(state)
+
+        #print("Just checking in...{}".format(depth))
+        
         if len(possibilities) == 0:
             #case of no valid moves
             return state.value()

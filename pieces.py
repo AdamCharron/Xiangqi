@@ -108,7 +108,10 @@ class General(Piece):
                 piece = grid[self.pos.x][i]
                 if piece:
                     if piece.split('.')[0].lower() == 'black' and piece.split('.')[1].lower() == 'general':
-                        possibilities.append([(self.pos.x,i)]) # Flying general
+                        #possibilities.append([(self.pos.x,i)]) # Flying general
+                        possibilities.append((self.pos.x,i)) # Flying general
+                        # TRYING SOMETHING. IT IS ADDING A ONE ELEMENT LIST OF TUPLE
+                        # WHEN IT SHOULD ONLY BE ADDING A TUPLE
                     break
         else:
             # black general, tent from x={3,5}, y={7,9}
@@ -136,9 +139,11 @@ class General(Piece):
                 piece = grid[self.pos.x][i]
                 if piece:
                     if piece.split('.')[0].lower() == 'red' and piece.split('.')[1].lower() == 'general':
-                        possibilities.append([(self.pos.x,i)]) # Flying general
+                        #possibilities.append([(self.pos.x,i)]) # Flying general
+                        possibilities.append((self.pos.x,i)) # Flying general
                     break
 
+        #print(possibilities)
         for possibility in possibilities:
             retval = self.check(possibility, grid)
             if retval[0]:
