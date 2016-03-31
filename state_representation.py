@@ -14,7 +14,7 @@ class Gamestate(object):
         self.move = (previous_piece, new_piece) # Original piece and new piece
         self.won = self.__pincus_winner__()# 1 if True won, -1 if False Won, 0 if no winner yet
         self.grid = self.__make_grid__()# Contains a gamegrid of the current representation
-        print(self.grid)
+        #print(self.grid)
 
         
     def successors(self):
