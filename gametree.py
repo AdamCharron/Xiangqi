@@ -44,7 +44,7 @@ class GameTree(object):
                     choice = child
         else:
             for child in possibilities:
-                child_value = self.nodeval(child, self.debth-1, value)
+                child_value = self.nodeval(child, self.depth-1, value)
                 if child_value < value:
                     value = child_value
                     choice = child
