@@ -249,16 +249,16 @@ def print_board_2(board):
 def print_help():
     ''' Helper function for printing the help table. No parameters or return.'''
     
-    print("-------------------------------- HELP -------------------------------- ")
-    print("A move is made by a user input of the form:\n\t- 3 character piece code\n\t- Tuple containing position where that piece will move\n\n")
+    print("\n\n------------------------------------ HELP -------------------------------------- ")
+    print("A move is made by a user input of the form:\n\t- 3 character piece code\n\t- Tuple containing position where that piece will move\n\t(these two arguments are on the same line, separated by a space)\n")
     print("The character code is of the following form: [player colour].[piece name letter].[piece number]\n")
     print("The player colour is either 'R' for red, or 'B' for black.\nA player can only move his/her own pieces.\n")
-    print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\t\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
-    print("The piece number corresponds to which of that piece type the player wishes to move.\nType \"print\" to see the game board.\n\n")
+    print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
+    print("The piece number corresponds to the that piece type the player wishes to move.\nType \"print\" to see the game board.\n\n")
     print("The coordinates for this piece's destination must be inputted as a tuple of (x,y).\nIn this board, x ranges from 0 to 9, and y from 0 to 8 (origin is at the bottom left)\n\n")
     print("Type \"print\" to view the game board\n")
     print("An example of a valid input would be \"RA1 (4,1)\"\n")
-    print("---------------------------------------------------------------------- ")
+    print("--------------------------------------------------------------------------------\n\n")
     return
 
 
@@ -515,17 +515,35 @@ def main():
 
         # End the function when one player (or AI) wins
         if current_state.won == 1:
+            print("\n\n")
+            print_board_2(update_board_from_grid(current_state.grid))
             print("\n\nThe game has been by the Red player!")
             return
         elif current_state.won == -1:
+            print("\n\n")
+            print_board_2(update_board_from_grid(current_state.grid))
             print("\n\nThe game has been by the Black player!")
             return
         
-        if current_state.turn: # Red turn (True)
+        if current_state.turn: # Red turn (True)    
             if AI1_on:
+                gametree = GameTree(current_state, input_depth1)
+                current_state = gametree.move()
+                continue
 
             else:   # Human player
+
                 input_str = input("\nEnter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
+
+                if input_str == "help":
+                    print_help()
+                    continue
+                elif input_str == "print":
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    print_board_2(update_board_from_grid(current_state.grid))
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    continue
+
                 temp = format_input(input_str, current_state.turn)
                 piecename = temp[0]
                 coord = temp[1]
@@ -533,14 +551,6 @@ def main():
                 if piecename == -1 or coord == -1:
                     # Invalid entry. Print is handled inside the format_input function
                     # Go for another attempted input
-                    continue
-                elif piecename == "help":
-                    print_help()
-                    continue
-                elif piecename == "print":
-                    print("-------------------------------- PRINT ------------------------------- ")
-                    print_board_2(update_board_from_grid(current_state.grid))
-                    print("-------------------------------- PRINT ------------------------------- ")
                     continue
                 else:
                     test = player_move(piecename, coords, current_state)
@@ -550,13 +560,28 @@ def main():
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
                         current_state = test
+                        continue
 
                     
         else:   # Black turn (False)
             if AI2_on:
-
+                gametree = GameTree(current_state, input_depth2)
+                current_state = gametree.move()
+                continue
+                
             else:
+
                 input_str = input("\nEnter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
+
+                if input_str == "help":
+                    print_help()
+                    continue
+                elif input_str == "print":
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    print_board_2(update_board_from_grid(current_state.grid))
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    continue
+                
                 temp = format_input(input_str, current_state.turn)
                 piecename = temp[0]
                 coord = temp[1]
@@ -564,14 +589,6 @@ def main():
                 if piecename == -1 or coord == -1:
                     # Invalid entry. Print is handled inside the format_input function
                     # Go for another attempted input
-                    continue
-                elif piecename == "help":
-                    print_help()
-                    continue
-                elif piecename == "print":
-                    print("-------------------------------- PRINT ------------------------------- ")
-                    print_board_2(update_board_from_grid(current_state.grid))
-                    print("-------------------------------- PRINT ------------------------------- ")
                     continue
                 else:
                     test = player_move(piecename, coords, current_state)
@@ -581,9 +598,10 @@ def main():
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
                         current_state = test
+                        #current_state = Gamestate(test.f_pieces, test.t_pieces, not test.turn, test.previous_piece, test.new_piece)
                         
-            #current_state.turn = not current_state.turn
-            #current_state = Gamestate(t_pieces, f_pieces, not current_state.turn, )
+            current_state.turn = not current_state.turn
+            #current_state = Gamestate(current_state.f_pieces, current_state.t_pieces, not current_state.turn, )
     return
 
 main()
