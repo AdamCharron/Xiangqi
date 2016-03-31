@@ -104,7 +104,7 @@ class General(Piece):
                 piece = grid[self.pos.x][i]
                 if piece:
                     if piece.split('.')[0].lower() == 'black' and piece.split('.')[1].lower() == 'general':
-                        possibilities.append((self.pos.x,i)) # Flying general
+                        possibilities.append([(self.pos.x,i)]) # Flying general
                     break
         else:
             # black general, tent from x={3,5}, y={7,9}
@@ -132,7 +132,7 @@ class General(Piece):
                 piece = grid[self.pos.x][i]
                 if piece:
                     if piece.split('.')[0].lower() == 'red' and piece.split('.')[1].lower() == 'general':
-                        possibilities.append((self.pos.x,i)) # Flying general
+                        possibilities.append([(self.pos.x,i)]) # Flying general
                     break
 
         for possibility in possibilities:
@@ -327,15 +327,15 @@ class Chariot(Piece):
         
         for i in range(self.pos.x+1,9): # Right
             temp = grid[i][self.pos.y]
-            print(temp)
+            #print(temp)
             if not temp:
                 possibilities.append( (i,self.pos.y) )
             else:
                 if self.color:
-                    if temp.split('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (i,self.pos.y) )
                 else:
-                    if temp.split('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (i,self.pos.y) )
                 break
 
@@ -345,10 +345,10 @@ class Chariot(Piece):
                 possibilities.append( (i,self.pos.y) )
             else:
                 if self.color:
-                    if temp.split('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (i,self.pos.y) )
                 else:
-                    if temp.split('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (i,self.pos.y) )
                 break
 
@@ -358,10 +358,10 @@ class Chariot(Piece):
                 possibilities.append( (self.pos.x,j) )
             else:
                 if self.color:
-                    if temp.split('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (self.pos.x,j) )
                 else:
-                    if temp.split('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (self.pos.x,j) )
                 break
 
@@ -371,10 +371,10 @@ class Chariot(Piece):
                 possibilities.append( (self.pos.x,j) )
             else:
                 if self.color:
-                    if temp.split('.')[0].lower() == 'black':
+                    if temp.strip('.')[0].lower() == 'black':
                         possibilities.append( (self.pos.x,j) )
                 else:
-                    if temp.split('.')[0].lower() == 'red':
+                    if temp.strip('.')[0].lower() == 'red':
                         possibilities.append( (self.pos.x,j) )
                 break
 
@@ -409,10 +409,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.split('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (i,self.pos.y) )
                     else:
-                        if temp.split('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (i,self.pos.y) )
                     break
 
@@ -430,10 +430,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.split('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (i,self.pos.y) )
                     else:
-                        if temp.split('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (i,self.pos.y) )
                     break
 
@@ -451,10 +451,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.split('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (self.pos.x,j) )
                     else:
-                        if temp.split('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (self.pos.x,j) )
                     break
 
@@ -472,10 +472,10 @@ class Cannon(Piece):
                     continue
                 else:
                     if self.color:
-                        if temp.split('.')[0].lower() == 'black':
+                        if temp.strip('.')[0].lower() == 'black':
                             attack_poss.append( (self.pos.x,j) )
                     else:
-                        if temp.split('.')[0].lower() == 'red':
+                        if temp.strip('.')[0].lower() == 'red':
                             attack_poss.append( (self.pos.x,j) )
                     break
 
@@ -488,6 +488,7 @@ class Cannon(Piece):
             retval = self.check(poss, grid)
             if retval[0] and retval[1]: # Killed something
                 ret_pieces.append( (Cannon(Position(poss[0],poss[1]),self.color,self.name) , retval[1]) )
+
         return ret_pieces
 
 class Soldier(Piece):

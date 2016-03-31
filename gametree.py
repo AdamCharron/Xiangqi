@@ -33,8 +33,8 @@ class GameTree(object):
         
         value = float("inf")
         choice = "no moves"
-        #if gamestate.turn:     # should this be if not self.current.turn ?
-        if not self.current.turn:
+        #if gamestate.turn:     # should it be 'if not self.current.turn' ? (AC)
+        if not self.current.turn:   # made change suggested in above line (AC)
             value = -float("inf")
         if self.current.turn:
             for child in possibilities:

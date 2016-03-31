@@ -457,33 +457,11 @@ def player_move(piecename, coords, current_state):
                         return Gamestate(T, F, not current_state.turn, piece, newpiece)
         #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
-    '''
-    else:
-        foundFlag = False
-        for piece in current_state.f_pieces:
-            if piece.name == piecename:
-                foundFlag = True
-                results = piece.check(tuple(coords), current_state.grid)
-                if not results[0]:  # Not a valid move
-                    return None
-                else:   # Valid move
-                    T = current_state.t_pieces[:]
-                    if results[1]:  # Eliminate an opponent's piece
-                        for elim_piece in current_state.t_pieces:
-                            if elim_piece.name == results[1]:
-                                T.remove(elim_piece)
-                                break
-                    newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
-                    F = current_state.f_pieces[:]
-                    F.remove(piece)
-                    F.append(newpiece)
-                    return Gamestate(T, F, not current_state.turn, piece, newpiece)
-        print("Invalid move. Tried to move a piece that is no longer in play.")
-        return None
-    '''
 
 
 def main():
+
+    # --------------------------- PLAYERS SETUP ------------------------------
     
     # AI1_on and AI2_on are boolean values indicating which AI's to turn on
     # When both AI_on = False, it is human player vs human player
@@ -524,6 +502,10 @@ def main():
         else:
             print("Invalid number of human players. There can only be 0, 1, or 2.\n")
 
+
+
+    # --------------------------- AI PARAMETERS ------------------------------
+
     # Can set an input depth for each AI in this module, or through user input
     input_depth1 = 5   # Arbitrary default value
     input_depth2 = 5   # Arbitrary default value
@@ -550,6 +532,8 @@ def main():
 
 
 
+    # ----------------------------- GAME LOOP ---------------------------------
+
     # Build initial Gamestate
     # Player 1 will be Red (True), Player 2 will be Black (False)
     current_state = Gamestate(redpieces, blackpieces, True, None, None)
@@ -572,10 +556,12 @@ def main():
 
         print_board_2(update_board_from_grid(current_state.grid))
         
+        # Take in next move
         if current_state.turn: # Red turn (True)    
             if AI1_on:
                 gametree = GameTree(current_state, int(input_depth1))
                 current_state = gametree.move()
+                print("Player 1 current state: {}".format(current_state))
                 continue
 
             else:   # Human player
@@ -616,11 +602,13 @@ def main():
                     
         else:   # Black turn (False)
             if AI2_on:
+                print("AI 2 starting game tree stuff")
                 gametree = GameTree(current_state, int(input_depth2))
                 current_state = gametree.move()
+                print("Player 2 current state: {}".format(current_state))
                 continue
                 
-            else:
+            else:   # Human player
 
                 input_str = input("\nBlack Player, enter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
 
