@@ -473,27 +473,54 @@ def main():
 
     game_over = False
     while not game_over:
-        input_str = input("\nEnter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
-        temp = format_input(input_str, current_state.turn)
-        piecename = temp[0]
-        coord = temp[1]
+        if current_state.turn: # Red turn (True)
+            if AI1_on:
 
-        if piecename == -1 or coord == -1:
-            # Invalid entry. Print is handled inside the format_input function
-            # Go for another attempted input
-            continue
-        elif piecename == "help":
-            print_help()
-            continue
-        elif piecename == "print":
-            print("-------------------------------- PRINT ------------------------------- ")
-            print_board_2(update_board_from_grid(current_state.grid))
-            print("-------------------------------- PRINT ------------------------------- ")
-            continue
-        else:
-            
+            else:
+                input_str = input("\nEnter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
+                temp = format_input(input_str, current_state.turn)
+                piecename = temp[0]
+                coord = temp[1]
 
-            
+                if piecename == -1 or coord == -1:
+                    # Invalid entry. Print is handled inside the format_input function
+                    # Go for another attempted input
+                    continue
+                elif piecename == "help":
+                    print_help()
+                    continue
+                elif piecename == "print":
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    print_board_2(update_board_from_grid(current_state.grid))
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    continue
+                else:
+
+
+                    
+        else:   # Black turn (False)
+            if AI2_on:
+
+            else:
+                input_str = input("\nEnter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
+                temp = format_input(input_str, current_state.turn)
+                piecename = temp[0]
+                coord = temp[1]
+
+                if piecename == -1 or coord == -1:
+                    # Invalid entry. Print is handled inside the format_input function
+                    # Go for another attempted input
+                    continue
+                elif piecename == "help":
+                    print_help()
+                    continue
+                elif piecename == "print":
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    print_board_2(update_board_from_grid(current_state.grid))
+                    print("-------------------------------- PRINT ------------------------------- ")
+                    continue
+                else:
+                
                 
     return
 
