@@ -418,7 +418,7 @@ def player_move(piecename, coords, current_state):
         foundFlag = False
         for piece in current_state.t_pieces:
             if piece.name == piecename:
-                print(piece.name)
+                #print(piece.name)
                 foundFlag = True
                 results = piece.check(tuple(coords), current_state.grid)
                 if not results[0]:  # Not a valid move
