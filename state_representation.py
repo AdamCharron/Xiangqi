@@ -45,7 +45,7 @@ class Gamestate(object):
                         for piece in t_pieces:
                             if piece.name == eliminate_name:
                                 t_pieces.remove(piece)
-                    new_pieces[i] = possibility
+                    #new_pieces[i] = possibility
                     successor.append(Gamestate(t_pieces, new_pieces, True, self.f_pieces[i], possibility))
         return successor
     
