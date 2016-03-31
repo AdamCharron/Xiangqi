@@ -104,7 +104,7 @@ class General(Piece):
                 piece = grid[self.pos.x][i]
                 if piece:
                     if piece.split('.')[0].lower() == 'black' and piece.split('.')[1].lower() == 'general':
-                        possibilities.append([(self.pos.x,i)]) # Flying general
+                        possibilities.append((self.pos.x,i)) # Flying general
                     break
         else:
             # black general, tent from x={3,5}, y={7,9}
@@ -132,7 +132,7 @@ class General(Piece):
                 piece = grid[self.pos.x][i]
                 if piece:
                     if piece.split('.')[0].lower() == 'red' and piece.split('.')[1].lower() == 'general':
-                        possibilities.append([(self.pos.x,i)]) # Flying general
+                        possibilities.append((self.pos.x,i)) # Flying general
                     break
 
         for possibility in possibilities:
