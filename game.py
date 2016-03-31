@@ -415,29 +415,47 @@ def player_move(piecename, coords, current_state):
     '''
 
     if current_state.turn:
-        foundFlag = False
         for piece in current_state.t_pieces:
             if piece.name == piecename:
                 #print(piece.name)
-                foundFlag = True
-                results = piece.check(tuple(coords), current_state.grid)
-                if not results[0]:  # Not a valid move
-                    return None
-                else:   # Valid move
-                    F = current_state.f_pieces[:]
-                    if results[1]:  # Eliminate an opponent's piece
-                        for elim_piece in current_state.f_pieces:
-                            if elim_piece.name == results[1]:
-                                F.remove(elim_piece)
-                                break
-                    newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
-                    T = current_state.t_pieces[:]
-                    T.remove(piece)
-                    T.append(newpiece)
-                    return Gamestate(T, F, not current_state.turn, piece, newpiece)
-        print("\nInvalid move. Tried to move a piece that is no longer in play.")
+                #results = piece.check(tuple(coords), current_state.grid)
+                for successor in piece.successors(current_state.grid):
+                    if Position(coords[0], coords[1]) == successor[0].pos:
+                        F = current_state.f_pieces[:]
+                        if successor[1]:  # Eliminate an opponent's piece
+                            for elim_piece in current_state.f_pieces:
+                                if elim_piece.name == successor[1]:
+                                    F.remove(elim_piece)
+                                    break
+                        newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                        T = current_state.t_pieces[:]
+                        T.remove(piece)
+                        T.append(newpiece)
+                        return Gamestate(T, F, not current_state.turn, piece, newpiece)
+        #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
 
+    else:
+        for piece in current_state.f_pieces:
+            if piece.name == piecename:
+                #print(piece.name)
+                #results = piece.check(tuple(coords), current_state.grid)
+                for successor in piece.successors(current_state.grid):
+                    if Position(coords[0], coords[1]) == successor[0].pos:
+                        T = current_state.t_pieces[:]
+                        if successor[1]:  # Eliminate an opponent's piece
+                            for elim_piece in current_state.t_pieces:
+                                if elim_piece.name == successor[1]:
+                                    T.remove(elim_piece)
+                                    break
+                        newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                        F = current_state.f_pieces[:]
+                        F.remove(piece)
+                        F.append(newpiece)
+                        return Gamestate(T, F, not current_state.turn, piece, newpiece)
+        #print("\nInvalid move. Tried to move a piece that is no longer in play.")
+        return None
+    '''
     else:
         foundFlag = False
         for piece in current_state.f_pieces:
@@ -460,6 +478,7 @@ def player_move(piecename, coords, current_state):
                     return Gamestate(T, F, not current_state.turn, piece, newpiece)
         print("Invalid move. Tried to move a piece that is no longer in play.")
         return None
+    '''
 
 
 def main():
