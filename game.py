@@ -189,33 +189,36 @@ def print_board_2(board):
 
         For example, starting board prints as follows:
         
-        RR0    RH0    RE0   |RA0    RG0    RA1|   RE1    RH1    RR1    
-        0      0      0     |0      0      0  |   0      0      0      
-        0      RC0    0     |0______0______0__|   0      RC1    0      
-        RS0    0      RS1    0      RS2    0      RS3    0      RS4    
-        0      0      0      0      0      0      0      0      0      
-        -----------------------------------------------------------
-                                   river                           
-        -----------------------------------------------------------
-        0      0      0      0      0      0      0      0      0      
-        BS0    0      BS1    0______BS2____0__    BS3    0      BS4    
-        0      BC0    0     |0      0      0  |   0      BC1    0      
-        0      0      0     |0      0      0  |   0      0      0      
-        BR0    BH0    BE0   |BA0    BG0    BA1|   BE1    BH1    BR1  
+0      RR0    RH0    RE0   |RA0    RG0    RA1|   RE1    RH1    RR1    
+1      0      0      0     |0      0      0  |   0      0      0      
+2      0      RC0    0     |0______0______0__|   0      RC1    0      
+3      RS0    0      RS1    0      RS2    0      RS3    0      RS4    
+4      0      0      0      0      0      0      0      0      0      
+      -----------------------------------------------------------
+                                 river                           
+      -----------------------------------------------------------
+5      0      0      0      0      0      0      0      0      0      
+6      BS0    0      BS1    0______BS2____0__    BS3    0      BS4    
+7      0      BC0    0     |0      0      0  |   0      BC1    0      
+8      0      0      0     |0      0      0  |   0      0      0      
+9      BR0    BH0    BE0   |BA0    BG0    BA1|   BE1    BH1    BR1    
+
+       0      1      2      3      4      5      6      7      8
+       
     '''
     
     row = 0
     riverflag = False
     while row < len(board[0]):
         col = 0
-        s = ''
         if row == 5 and not riverflag:
             # Print the river
-            print("-"*59)
-            print(" "*27 + "river" + " "*27)
-            print("-"*59)
+            print("      " + "-"*59)
+            print("      " + " "*27 + "river" + " "*27)
+            print("      " + "-"*59)
             riverflag = True
             continue
+        s = str(row) + "      "
         while col < len(board):
             s += str(board[col][row])
 
@@ -243,6 +246,10 @@ def print_board_2(board):
             col += 1
         row += 1
         print(s)
+    s = '\n       '
+    for col in range(len(board)):
+        s += str(col) + '      '
+    print(s)
     print("\n")
 
 
@@ -255,7 +262,7 @@ def print_help():
     print("The player colour is either 'R' for red, or 'B' for black.\nA player can only move his/her own pieces.\n")
     print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
     print("The piece number corresponds to the that piece type the player wishes to move.\nType \"print\" to see the game board.\n\n")
-    print("The coordinates for this piece's destination must be inputted as a tuple of (x,y).\nIn this board, x ranges from 0 to 9, and y from 0 to 8 (origin is at the bottom left)\n\n")
+    print("The coordinates for this piece's destination must be inputted as a tuple of (x,y).\nIn this board, x ranges from 0 to 9, and y from 0 to 8 (origin is at the top left)\n\n")
     print("Type \"print\" to view the game board\n")
     print("An example of a valid input would be \"RA1 (4,1)\"\n")
     print("--------------------------------------------------------------------------------\n\n")
@@ -386,12 +393,12 @@ def format_input(input_str, turn):
 
 
     # If we got here, the piecename is valid. Now we handle the coordinates
-    if tempx not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-        print("Invalid x coordinate. x coordinates should be between 0 and 9")
+    if tempx not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+        print("Invalid x coordinate. x coordinates should be between 0 and 8")
         print("Try again. Type \"help\" for help if needed.")
         return -1, -1
-    if tempy not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
-        print("Invalid y coordinate. y coordinates should be between 0 and 8")
+    if tempy not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+        print("Invalid y coordinate. y coordinates should be between 0 and 9")
         print("Try again. Type \"help\" for help if needed.")
         return -1, -1
     coord = [int(tempx), int(tempy)]
@@ -445,7 +452,7 @@ def player_move(piecename, coords, current_state):
                         for elim_piece in current_state.t_pieces:
                             if elim_piece.name == results[1]:
                                 T.remove(elim_piece)
-                                T.remove(elim_piece)
+                                break
                     newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
                     F = current_state.f_pieces[:]
                     F.remove(piece)
@@ -616,7 +623,7 @@ def main():
                 else:
                     test = player_move(piecename, coord, current_state)
                     if test == None:
-                        print("Invalid move. This piece is unable to go to the desired location.")
+                        print("Invalid move. This piece is unable to go to the desired location.\n")
                         continue
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
@@ -634,8 +641,16 @@ main()
 
 
 '''
-K WHERE THINGS STAND NOW (OUTSTANDING ERRORS):
+K WHERE THINGS STAND NOW (OUTSTANDING ISSUES):
 
-1) 
+1) Horse blocking does not work (if something is right in fron of the horse, it
+   will not be blocked even though it should.
+2) Nothing stopping advisors from facing each other
+3) Nothing stopping elephant from crossing the river
+4) Nothing stopping the general or advisors from leaving the tent
+5) Rook can jump over pretty much anything (I believe all pieces can jump)
 
+Nevermind. Pieces can literally go anywhere...
+
+WHERE ARE THE PIECE CONSTRAINTS HANDLED?
 '''
