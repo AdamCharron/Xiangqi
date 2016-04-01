@@ -203,7 +203,7 @@ def print_board_2(board):
 8      0      0      0     |0      0      0  |   0      0      0      
 9      BR0    BH0    BE0   |BA0    BG0    BA1|   BE1    BH1    BR1    
 
-       0      1      2      3      4      5      6      7      8
+       A      B      C      D      E      F      G      H      I
        
     '''
     
@@ -247,9 +247,10 @@ def print_board_2(board):
         row += 1
         print(s)
     s = '\n       '
-    for col in range(len(board)):
-        s += str(col) + '      '
-    print(s)
+    #for col in range(len(board)):
+    #    s += str(col) + '      '
+    #print(s)
+    print("\n       A      B      C      D      E      F      G      H      I")
     print("\n")
 
 
@@ -257,14 +258,15 @@ def print_help():
     ''' Helper function for printing the help table. No parameters or return.'''
     
     print("\n\n------------------------------------ HELP -------------------------------------- ")
-    print("A move is made by a user input of the form:\n\t- 3 character piece code\n\t- Tuple containing position where that piece will move\n\t(these two arguments are on the same line, separated by a space)\n")
+    print("A move is made by a user input of the form:\n\t- 3 character piece code\n\t- Coordinates of the position where that piece will move\n\t(these two arguments are on the same line, separated by a space)\n")
     print("The character code is of the following form: [player colour].[piece name letter].[piece number]\n")
     print("The player colour is either 'R' for red, or 'B' for black.\nA player can only move his/her own pieces.\n")
     print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
     print("The piece number corresponds to the that piece type the player wishes to move.\nType \"print\" to see the game board.\n\n")
-    print("The coordinates for this piece's destination must be inputted as a tuple of (x,y).\nIn this board, x ranges from 0 to 9, and y from 0 to 8 (origin is at the top left)\n\n")
+    print("The coordinates for this piece's destination must be inputted in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n\n")
+    print("Inputs are not case sensitive.\n")
     print("Type \"print\" to view the game board\n")
-    print("An example of a valid input would be \"RA1 (4,1)\"\n")
+    print("An example of a valid input would be \"RA1 E1\"\n")
     print("--------------------------------------------------------------------------------\n\n")
     return
 
@@ -275,7 +277,7 @@ def format_input(input_str, turn):
     destination coordinate. Also catches improper inputs and prints the
     reason for the improper input, then returns -1, -1.
 
-    Expect input of the form "RA1 (4,1)" (not case sensitive)
+    Expect input of the form "RA1 E1" (not case sensitive)
     If successful, this function returns piecename and the coordinate as a list.
     '''
 
@@ -290,22 +292,22 @@ def format_input(input_str, turn):
         print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
-    if len(input_str[1]) != 5:
+    if len(input_str[1]) != 2:
         print("\nIncorrect coordinate input length.")
         print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
-    if input_str[1][0] != "(" or input_str[1][4] != ")" or input_str[1][2] != ",":
-        print("\nIncorrect formatting for the inputted coordinates.")
-        print("Try again. Type \"help\" for help if needed.\n")
-        return -1, -1
+    #if input_str[1][0] != "(" or input_str[1][4] != ")" or input_str[1][2] != ",":
+    #    print("\nIncorrect formatting for the inputted coordinates.")
+    #    print("Try again. Type \"help\" for help if needed.\n")
+    #    return -1, -1
 
     # The lengths are good, now checking for valid input and building piecename
     tempcolour = input_str[0][0].upper()
     tempname = input_str[0][1].upper()
     tempnumber = str(input_str[0][2])
-    tempx = str(input_str[1][1])
-    tempy = str(input_str[1][3])
+    tempx = str(input_str[1][0])
+    tempy = str(input_str[1][1])
     piecename = ""
     coord = []
 
@@ -393,7 +395,25 @@ def format_input(input_str, turn):
 
 
     # If we got here, the piecename is valid. Now we handle the coordinates
-    if tempx not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
+    if tempx == "A" or tempx == "a":
+        tempx = 0
+    elif tempx == "B" or tempx == "b":
+        tempx = 1
+    elif tempx == "C" or tempx == "c":
+        tempx = 2
+    elif tempx == "D" or tempx == "d":
+        tempx = 3
+    elif tempx == "E" or tempx == "e":
+        tempx = 4
+    elif tempx == "F" or tempx == "f":
+        tempx = 5
+    elif tempx == "G" or tempx == "g":
+        tempx = 6
+    elif tempx == "H" or tempx == "h":
+        tempx = 7
+    elif tempx == "I" or tempx == "i":
+        tempx = 8
+    else:
         print("\nInvalid x coordinate. x coordinates should be between 0 and 8")
         print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
@@ -401,7 +421,7 @@ def format_input(input_str, turn):
         print("\nInvalid y coordinate. y coordinates should be between 0 and 9")
         print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
-    coord = [int(tempx), int(tempy)]
+    coord = [tempx, int(tempy)]
     
     return [piecename, coord]
 
@@ -457,6 +477,30 @@ def player_move(piecename, coords, current_state):
                         return Gamestate(T, F, not current_state.turn, piece, newpiece)
         #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
+
+
+def num_to_letter(num):
+    if num == 0:
+        return "A"
+    elif num == 1:
+        return "B"
+    elif num == 2:
+        return "C"
+    elif num == 3:
+        return "D"
+    elif num == 4:
+        return "E"
+    elif num == 5:
+        return "F"
+    elif num == 6:
+        return "G"
+    elif num == 7:
+        return "H"
+    elif num == 8:
+        return "I"
+    else:
+        print("\nWAT WAT???? Why was {} inputted?\n".format(num))
+        return "-1"
 
 
 def main():
@@ -573,7 +617,11 @@ def main():
                 test = gametree.move()
                 if test != "no moves":
                     current_state = test
-                    print("AI Player 1 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                    x0 = num_to_letter(current_state.move[0].pos.x)
+                    y0 = current_state.move[0].pos.y
+                    x1 = num_to_letter(current_state.move[1].pos.x)
+                    y1 = current_state.move[1].pos.y
+                    print("AI Player 1 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
                     #print("AI Player 1 current state: {}".format(current_state))
                 else:
                     print("\n\nThe game has been won by the Black player!")
@@ -613,7 +661,11 @@ def main():
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
                         current_state = test
-                        print("Player 1 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                        x0 = num_to_letter(current_state.move[0].pos.x)
+                        y0 = current_state.move[0].pos.y
+                        x1 = num_to_letter(current_state.move[1].pos.x)
+                        y1 = current_state.move[1].pos.y
+                        print("Player 1 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
                         #print("Player 1 current state: {}".format(current_state))
                         continue
 
@@ -625,7 +677,11 @@ def main():
                 test = gametree.move()
                 if test != "no moves":
                     current_state = test
-                    print("AI Player 2 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                    x0 = num_to_letter(current_state.move[0].pos.x)
+                    y0 = current_state.move[0].pos.y
+                    x1 = num_to_letter(current_state.move[1].pos.x)
+                    y1 = current_state.move[1].pos.y
+                    print("AI Player 2 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
                     #print("AI Player 2 current state: {}".format(current_state))
                 else:
                     print("\n\nThe game has been won by the Red player!")
@@ -661,7 +717,11 @@ def main():
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
                         current_state = test
-                        print("Player 2 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                        x0 = num_to_letter(current_state.move[0].pos.x)
+                        y0 = current_state.move[0].pos.y
+                        x1 = num_to_letter(current_state.move[1].pos.x)
+                        y1 = current_state.move[1].pos.y
+                        print("AI Player 2 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
                         #print("Player 2 current state: {}".format(current_state))
                         
             #current_state.turn = not current_state.turn
@@ -669,14 +729,3 @@ def main():
     return
 
 main()
-
-
-'''
-CURRENT STATE:
-
-- Pvp seems to run fine :)
-- Issues arise with the AI. It seems to be taking an unfathomably long time to
-  run with the move() function, even at depth 1.
-
-- 
-'''
