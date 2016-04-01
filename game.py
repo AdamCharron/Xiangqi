@@ -606,7 +606,7 @@ def main():
         else:   # Black turn (False)
             if AI2_on:
                 print("AI 2 starting game tree stuff")
-                gametree = GameTree(current_state, int(input_depth1))
+                gametree = GameTree(current_state, int(input_depth2))
                 test = gametree.move()
                 if test != "no moves":
                     current_state = test
