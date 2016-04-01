@@ -281,23 +281,23 @@ def format_input(input_str, turn):
 
     input_str = input_str.split(" ")
     if len(input_str) != 2:
-        print("Incorrect number of input arguments.")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nIncorrect number of input arguments.")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
     if len(input_str[0]) != 3:
-        print("Incorrect piece code length.")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nIncorrect piece code length.")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
     if len(input_str[1]) != 5:
-        print("Incorrect coordinate input length.")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nIncorrect coordinate input length.")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
     if input_str[1][0] != "(" or input_str[1][4] != ")" or input_str[1][2] != ",":
-        print("Incorrect formatting for the inputted coordinates.")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nIncorrect formatting for the inputted coordinates.")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
     # The lengths are good, now checking for valid input and building piecename
@@ -313,19 +313,19 @@ def format_input(input_str, turn):
     # Colour
     if tempcolour == "R":
         if not turn:
-            print("Cannot move opponent's pieces.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nCannot move opponent's pieces.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += "red."
     elif tempcolour == "B":
         if turn:
-            print("Cannot move opponent's pieces.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nCannot move opponent's pieces.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += "black."
     else:
-        print("Invalid piece colour.")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nInvalid piece colour.")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
 
@@ -333,73 +333,73 @@ def format_input(input_str, turn):
     if tempname == "G":
         piecename += "general."
         if tempnumber != "0":
-            print("Invalid piece number. The general can only have number 0.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The general can only have number 0.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     elif tempname == "A":
         piecename += "advisor."
         if tempnumber not in ["0", "1"]:
-            print("Invalid piece number. The advisor can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The advisor can only have numbers 0 or 1.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     elif tempname == "E":
         piecename += "elephant."
         if tempnumber not in ["0", "1"]:
-            print("Invalid piece number. The elephant can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The elephant can only have numbers 0 or 1.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     elif tempname == "H":
         piecename += "horse."
         if tempnumber not in ["0", "1"]:
-            print("Invalid piece number. The horse can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The horse can only have numbers 0 or 1.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     elif tempname == "R":
         piecename += "chariot."
         if tempnumber not in ["0", "1"]:
-            print("Invalid piece number. The chariot can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The chariot can only have numbers 0 or 1.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     elif tempname == "C":
         piecename += "cannon."
         if tempnumber not in ["0", "1"]:
-            print("Invalid piece number. The cannon can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The cannon can only have numbers 0 or 1.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     elif tempname == "S":
         piecename += "soldier."
         if tempnumber not in ["0", "1", "2", "3", "4"]:
-            print("Invalid piece number. The soldier can only have numbers 0, 1, 2, 3, or 4.")
-            print("Try again. Type \"help\" for help if needed.")
+            print("\nInvalid piece number. The soldier can only have numbers 0, 1, 2, 3, or 4.")
+            print("Try again. Type \"help\" for help if needed.\n")
             return -1, -1
         piecename += tempnumber
         
     else:
-        print("Invalid piece name letter.")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nInvalid piece name letter.")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
 
 
     # If we got here, the piecename is valid. Now we handle the coordinates
     if tempx not in ["0", "1", "2", "3", "4", "5", "6", "7", "8"]:
-        print("Invalid x coordinate. x coordinates should be between 0 and 8")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nInvalid x coordinate. x coordinates should be between 0 and 8")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
     if tempy not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-        print("Invalid y coordinate. y coordinates should be between 0 and 9")
-        print("Try again. Type \"help\" for help if needed.")
+        print("\nInvalid y coordinate. y coordinates should be between 0 and 9")
+        print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
     coord = [int(tempx), int(tempy)]
     
@@ -581,6 +581,8 @@ def main():
                     continue
 
                 temp = format_input(input_str, current_state.turn)
+                if temp == (-1, -1):
+                    continue
                 piecename = temp[0]
                 coord = tuple(temp[1])
                 print("piecename: {}, coord: {}".format(piecename, coord))
