@@ -554,6 +554,15 @@ def main():
             print("\n\nThe game has been won by the Black player!")
             return
 
+        gametree = GameTree(current_state, 1)
+        test2 = gametree.move()
+        if test2 == "no moves":
+            if current_state.turn:
+                print("\n\nThe game has been won by the Black player!")
+                return
+            print("\n\nThe game has been won by the Red player!")
+            return
+
         print_board_2(update_board_from_grid(current_state.grid))
         
         # Take in next move
@@ -564,7 +573,11 @@ def main():
                 test = gametree.move()
                 if test != "no moves":
                     current_state = test
-                    print("Player 1 current state: {}".format(current_state))
+                    print("AI Player 1 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                    #print("AI Player 1 current state: {}".format(current_state))
+                else:
+                    print("\n\nThe game has been won by the Black player!")
+                    return                   
                 continue
 
             else:   # Human player
@@ -600,8 +613,8 @@ def main():
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
                         current_state = test
-                        #current_state.turn = not current_state.turn
-                        print("finished the round")
+                        print("Player 1 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                        #print("Player 1 current state: {}".format(current_state))
                         continue
 
                     
@@ -612,7 +625,11 @@ def main():
                 test = gametree.move()
                 if test != "no moves":
                     current_state = test
-                    print("Player 2 current state: {}".format(current_state))
+                    print("AI Player 2 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                    #print("AI Player 2 current state: {}".format(current_state))
+                else:
+                    print("\n\nThe game has been won by the Red player!")
+                    return                   
                 continue
                 
             else:   # Human player
@@ -644,8 +661,8 @@ def main():
                     else:
                         # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
                         current_state = test
-                        #current_state.turn = not current_state.turn
-                        #current_state = Gamestate(test.f_pieces, test.t_pieces, not test.turn, test.previous_piece, test.new_piece)
+                        print("Player 2 moved piece {} from ({},{}) to ({},{})\n".format(current_state.move[0].name, current_state.move[0].pos.x, current_state.move[0].pos.y, current_state.move[1].pos.x, current_state.move[1].pos.y))
+                        #print("Player 2 current state: {}".format(current_state))
                         
             #current_state.turn = not current_state.turn
             #current_state = Gamestate(current_state.f_pieces, current_state.t_pieces, not current_state.turn, )
