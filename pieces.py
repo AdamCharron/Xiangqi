@@ -531,4 +531,7 @@ class Soldier(Piece):
         if self._across_river():
             return 2 # Soldier has crossed river
         else:
-            return 1 # Solder has not crossed river
+            if (self.color and self.pos.y == 4) or (not self.color and self.pos.y==5):
+                return 1.1
+            else:
+                return 1 # Solder has not crossed river
