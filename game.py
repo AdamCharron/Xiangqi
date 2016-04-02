@@ -437,6 +437,7 @@ def player_move(piecename, coords, current_state):
     if current_state.turn:
         for piece in current_state.t_pieces:
             if piece.name == piecename:
+                eliminated = None
                 #print(piece.name)
                 #results = piece.check(tuple(coords), current_state.grid)
                 for successor in piece.successors(current_state.grid):
@@ -446,19 +447,21 @@ def player_move(piecename, coords, current_state):
                             for elim_piece in current_state.f_pieces:
                                 if elim_piece.name == successor[1]:
                                     F.remove(elim_piece)
+                                    eliminated = elim_piece
                                     break
                         #newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
                         newpiece = successor[0]
                         T = current_state.t_pieces[:]
                         T.remove(piece)
                         T.append(newpiece)
-                        return Gamestate(T, F, not current_state.turn, piece, newpiece)
+                        return Gamestate(T, F, not current_state.turn, piece, newpiece, eliminated)
         #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
 
     else:
         for piece in current_state.f_pieces:
             if piece.name == piecename:
+                eliminated = None
                 #print(piece.name)
                 #results = piece.check(tuple(coords), current_state.grid)
                 for successor in piece.successors(current_state.grid):
@@ -468,13 +471,14 @@ def player_move(piecename, coords, current_state):
                             for elim_piece in current_state.t_pieces:
                                 if elim_piece.name == successor[1]:
                                     T.remove(elim_piece)
+                                    eliminated = elim_piece
                                     break
                         #newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
                         newpiece = successor[0]
                         F = current_state.f_pieces[:]
                         F.remove(piece)
                         F.append(newpiece)
-                        return Gamestate(T, F, not current_state.turn, piece, newpiece)
+                        return Gamestate(T, F, not current_state.turn, piece, newpiece, eliminated)
         #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
 
@@ -551,8 +555,8 @@ def main():
     # --------------------------- AI PARAMETERS ------------------------------
 
     # Can set an input depth for each AI in this module, or through user input
-    input_depth1 = 5   # Arbitrary default value
-    input_depth2 = 5   # Arbitrary default value
+    input_depth1 = 3   # Arbitrary default value
+    input_depth2 = 3   # Arbitrary default value
     if AI1_on:
         while True:
             input_depth1 = str(input("Select the desired search depth for AI1: "))
@@ -621,7 +625,11 @@ def main():
                     y0 = current_state.move[0].pos.y
                     x1 = num_to_letter(current_state.move[1].pos.x)
                     y1 = current_state.move[1].pos.y
-                    print("AI Player 1 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
+                    printstr = "AI Red Player moved piece {} from {}{} to {}{}".format(current_state.move[0].name, x0, y0, x1, y1)
+                    if current_state.eliminated != None:
+                        printstr += " and eliminated Black player's piece {}".format(current_state.eliminated.name)
+                    printstr += "\n"
+                    print(printstr)
                     #print("AI Player 1 current state: {}".format(current_state))
                 else:
                     print("\n\nThe game has been won by the Black player!")
@@ -646,7 +654,7 @@ def main():
                     continue
                 piecename = temp[0]
                 coord = tuple(temp[1])
-                print("piecename: {}, coord: {}".format(piecename, coord))
+                #print("piecename: {}, coord: {}".format(piecename, coord))
 
                 if piecename == -1 or coord == -1:
                     # Invalid entry. Print is handled inside the format_input function
@@ -665,7 +673,11 @@ def main():
                         y0 = current_state.move[0].pos.y
                         x1 = num_to_letter(current_state.move[1].pos.x)
                         y1 = current_state.move[1].pos.y
-                        print("Player 1 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
+                        printstr = "Red Player moved piece {} from {}{} to {}{}".format(current_state.move[0].name, x0, y0, x1, y1)
+                        if current_state.eliminated != None:
+                            printstr += " and eliminated Black player's piece {}".format(current_state.eliminated.name)
+                        printstr += "\n"                        
+                        print(printstr)
                         #print("Player 1 current state: {}".format(current_state))
                         continue
 
@@ -681,7 +693,11 @@ def main():
                     y0 = current_state.move[0].pos.y
                     x1 = num_to_letter(current_state.move[1].pos.x)
                     y1 = current_state.move[1].pos.y
-                    print("AI Player 2 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
+                    printstr = "Black Player moved piece {} from {}{} to {}{}".format(current_state.move[0].name, x0, y0, x1, y1)
+                    if current_state.eliminated != None:
+                        printstr += " and eliminated Red player's piece {}".format(current_state.eliminated.name)
+                    printstr += "\n"
+                    print(printstr)
                     #print("AI Player 2 current state: {}".format(current_state))
                 else:
                     print("\n\nThe game has been won by the Red player!")
@@ -721,7 +737,11 @@ def main():
                         y0 = current_state.move[0].pos.y
                         x1 = num_to_letter(current_state.move[1].pos.x)
                         y1 = current_state.move[1].pos.y
-                        print("AI Player 2 moved piece {} from {}{} to {}{}\n".format(current_state.move[0].name, x0, y0, x1, y1))
+                        printstr = "Black Player moved piece {} from {}{} to {}{}".format(current_state.move[0].name, x0, y0, x1, y1)
+                        if current_state.eliminated != None:
+                            printstr += " and eliminated Red player's piece {}".format(current_state.eliminated.name)
+                        printstr += "\n"
+                        print(printstr)
                         #print("Player 2 current state: {}".format(current_state))
                         
             #current_state.turn = not current_state.turn
