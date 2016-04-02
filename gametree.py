@@ -1,6 +1,6 @@
 from pieces import *
 from state_representation import *
-
+from random import shuffle
 class GameTree(object):
     '''
     Class is used to find the best move based on a game tree search with
@@ -26,7 +26,9 @@ class GameTree(object):
         '''navigate the game tree to come up with best configuration,
         return that gamestate'''
         
-        possibilities = self.min_order(self.current)
+        #possibilities = self.min_order(self.current)
+        possibilities = self.current.successors()
+        shuffle(possibilities)
         if len(possibilities) == 0:
             #case of no valid moves
             return self.current.value()
@@ -57,8 +59,8 @@ class GameTree(object):
         if depth == 0:
             return state.value()
         
-        possibilities = self.min_order(state)
-
+        possibilities = state.successors()
+        shuffle(possibilities)
         #print("Just checking in...{}".format(depth))
         
         if len(possibilities) == 0:
@@ -81,7 +83,7 @@ class GameTree(object):
                     return value
         return value
 
-    
+    '''
     def min_order(self,state):
         if not self.implement_minsort:
             return state.successors()
@@ -149,3 +151,4 @@ class GameTree(object):
                     j = j + 1
                     k = k + 1
             return alist
+    '''
