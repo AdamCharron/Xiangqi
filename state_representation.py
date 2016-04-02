@@ -30,25 +30,29 @@ class Gamestate(object):
                     new_pieces = self.t_pieces[:]
                     new_pieces[i] = possibility
                     f_pieces = self.f_pieces
+                    eliminated=None
                     if eliminate_name != None:
                         f_pieces = self.f_pieces[:]
                         for piece in f_pieces:
                             if piece.name == eliminate_name:
                                 f_pieces.remove(piece)
-                    successor.append(Gamestate(new_pieces, f_pieces, False, self.t_pieces[i], possibility))
+                                eliminated=piece
+                    successor.append(Gamestate(new_pieces, f_pieces, False, self.t_pieces[i], possibility,eliminated))
         else:
             for i in range(len(self.f_pieces)):
                 for (possibility, eliminate_name) in self.f_pieces[i].successors(self.grid):
                     new_pieces = self.f_pieces[:]
                     new_pieces[i] = possibility     # Added this and next line
                     t_pieces = self.t_pieces        # Wanted to be sure, but looks like they were just forgotten
+                    eliminated=None
                     if eliminate_name != None:
                         t_pieces = self.t_pieces[:]
                         for piece in t_pieces:
                             if piece.name == eliminate_name:
                                 t_pieces.remove(piece)
+                                eliminated=piece
                     #new_pieces[i] = possibility
-                    successor.append(Gamestate(t_pieces, new_pieces, True, self.f_pieces[i], possibility))
+                    successor.append(Gamestate(t_pieces, new_pieces, True, self.f_pieces[i], possibility,eliminated))
         return successor
     
     
