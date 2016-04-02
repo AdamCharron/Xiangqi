@@ -3,8 +3,9 @@ from pieces import *
 
 class Gamestate(object):
     
-    def __init__(self, pieces_true, pieces_false, turn, previous_piece, new_piece):
+    def __init__(self, pieces_true, pieces_false, turn, previous_piece, new_piece, eliminated=None):
         # Pieces of the true player is an array of Piece objects
+        #eliminated is an optional parameter that defaults as None if not provided
         self.t_pieces = pieces_true
         
         # Defines if it is player True or False's turn,
@@ -14,6 +15,7 @@ class Gamestate(object):
         self.move = (previous_piece, new_piece) # Original piece and new piece
         self.won = self.__pincus_winner__()# 1 if True won, -1 if False Won, 0 if no winner yet
         self.grid = self.__make_grid__()# Contains a gamegrid of the current representation
+        self.eliminated=eliminated
         #print(self.grid)
 
         
