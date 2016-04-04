@@ -393,7 +393,7 @@ class Chariot(Piece):
 class Cannon(Piece):
     def __init__(self, position, color, name):
         super().__init__(position,color,name)
-        self.value = 4.5
+        self.value = 6
 
     def successors(self, grid):
         ret_pieces = []
