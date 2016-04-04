@@ -131,7 +131,7 @@ class General(Piece):
             elif self.get_pos() == (5,7):
                 possibilities = [(4,7),(5,8)]
             else:
-                raise("Black general not in palace!")
+                possibilities = []
             for i in range(self.pos.y-1,-1,-1):
                 piece = grid[self.pos.x][i]
                 if piece:
