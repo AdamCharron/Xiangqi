@@ -61,7 +61,7 @@ class Gamestate(object):
         #returns a value in range negative infinity to infinity
         val_T = 0
         val_F = 0
-        offset = 4
+        offset = 100
         ''' self.won = 0 if no winner yet
                      = 1 if player true won
                      = -1 if player false won
@@ -74,7 +74,9 @@ class Gamestate(object):
             val_T += piece.get_value()
         for piece in self.f_pieces:
             val_F += piece.get_value()
-        return (val_T + offset) / (val_F + offset)
+        #return (val_T + offset) / (val_F + offset)
+        return val_T - val_F    # HEY GUYS IT'S ADAM. TRYING SUBTRACTION CAUSE
+                                # POINT FOR POINT EXCHANGES ARE MORE CONSISTENT
         ''' The more pieces we lose, the more valuable the ones we have are.
             The more pieces the opponent loses, the more value is placed on the
             ones he has left.
