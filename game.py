@@ -562,7 +562,7 @@ def main():
             input_depth1 = str(input("Select the desired search depth for AI1: "))
             #if len(input_depth1) != 1 or input_depth1 <= "0" or input_depth1 > "9":
             if input_depth1 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                print("Invalid depth. Needs to be between 0 and 9.\n")
+                print("Invalid depth. Needs to be between 1 and 9.\n")
                 continue
             break
     if AI2_on:
@@ -570,7 +570,7 @@ def main():
             input_depth2 = str(input("Select the desired search depth for AI2: "))
             #if len(input_depth2) != 1 or input_depth2 <= '0' or input_depth2 > '9':
             if input_depth2 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                print("Invalid depth. Needs to be between 0 and 9.\n")
+                print("Invalid depth. Needs to be between 1 and 9.\n")
                 continue
             break
 
@@ -616,7 +616,7 @@ def main():
         # Take in next move
         if current_state.turn: # Red turn (True)    
             if AI1_on:
-                print("AI 1 starting game tree stuff")
+                print("Red AI is thinking...")
                 gametree = GameTree(current_state, int(input_depth1))
                 test = gametree.move()
                 if test != "no moves":
@@ -684,7 +684,7 @@ def main():
                     
         else:   # Black turn (False)
             if AI2_on:
-                print("AI 2 starting game tree stuff")
+                print("Black AI is thinking...")
                 gametree = GameTree(current_state, int(input_depth2))
                 test = gametree.move()
                 if test != "no moves":
