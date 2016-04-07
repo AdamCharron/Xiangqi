@@ -502,16 +502,16 @@ def main():
     input_depth2 = 4   # Arbitrary default value
     if AI1_on:
         while True:
-            input_depth1 = str(input("Select the desired search depth for AI1: "))
-            if input_depth1 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                print("Invalid depth. Needs to be between 1 and 9.\n")
+            input_depth1 = str(input("Select the desired difficulty for AI1 (1 - Very Easy, 2 - Easy, 3 - Medium, 4 - Hard): "))
+            if input_depth1 not in ["1", "2", "3", "4"]:
+                print("Invalid difficulty. Needs to be between 1 and 4.\n")
                 continue
             break
     if AI2_on:
         while True:
-            input_depth2 = str(input("Select the desired search depth for AI2: "))
-            if input_depth2 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                print("Invalid depth. Needs to be between 1 and 9.\n")
+            input_depth2 = str(input("Select the desired difficulty for AI2 (1 - Very Easy, 2 - Easy, 3 - Medium, 4 - Hard): "))
+            if input_depth2 not in ["1", "2", "3", "4"]:
+                print("Invalid difficulty. Needs to be between 1 and 4.\n")
                 continue
             break
 
