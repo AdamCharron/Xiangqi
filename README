@@ -1,0 +1,74 @@
+----------------------------------- README -------------------------------------- 
+
+Play a game of Xiangqi with a friend, with an AI, or even pit an AI against an AI!
+
+To begin:
+    - Download all files
+    - Run game.py in Python 3
+    - Input the number of number of human players desired (0: AI vs AI
+                                                           1: Human vs AI, Human is red
+                                                           2: Human vs Human)
+            -> For every non-human player desired, a prompt will appear.
+                At each prompt, input the search depth desired for that AI (integer from 1 to 4 inclusive)
+    - Play the game!
+
+To play the game: Input moves until there's a winner
+
+A move is made by a user input of the form:
+    [3 character piece code] [Coordinates of the position where that piece will move]
+
+    (these two arguments are on the same line, separated by a space)
+
+The character code is of the following form: [player colour].[piece name letter].[piece number]
+
+The player colour is either 'R' for red, or 'B' for black.
+A player can only move his/her own pieces.
+
+The piece name letter is a letter corresponding to the piece type:
+    G = general
+    A = advisor
+    E = elephant
+    H = horse
+    R = chariot
+    C = cannon
+    S = soldier
+
+The piece number corresponds to the piece type that the player wishes to move.
+
+
+The coordinates for this piece's destination must be inputed in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.
+In this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)
+
+Inputs are not case sensitive.
+
+A player can end the game by typing "end".
+
+An example of a valid input would be: RA1 E1
+
+------------------------------- RULES OF XIANGQI ---------------------------------- 
+The objective of the game is to capture the opponent's general. Whoever does so wins the game.
+
+There is a river horizontally across the middle of the board that can be crossed by anyone except the Advisors, the Elephants, and the Generals (with the exception of the "flying general" move described below).
+
+There are two 3x3 tents, one for each player, centered at the top and bottom of the board. The Advisors cannot leave the tent, and the Generals can only leave the tent for the the "flying general" move described below. Any other piece from either player can enter or leave either tent.
+
+General (G)
+Can move and capture one space orthogonally, but cannot leave the tent. If it has a direct view of the other general, it can instantly capture it via the "flying general" move to win the game.
+
+Advisor (A)
+Can move and capture one spot diagonally, but cannot leave the tent.
+
+Elephant (E)
+Can move and capture 2 spaces diagonally (both spaces in same direction), cannot jump over pieces (blocked if anyone is one spot diagonally adjacent). It also cannot cross the river.
+
+Horse (H)
+Can move one direction orthogonally, then one diagonally (away from where it started). It cannot jump over pieces (blocked if anyone orthogonally adjacent), but can capture pieces at the end of the diagonal move.
+
+Chariot (R)
+Much like a rook in chess, it can move and capture any distance orthogonally but cannot jump over any pieces.
+
+Cannon (C)
+Can move any distance orthogonally without jumping over any pieces. It can capture any distance orthogonally by jumping over exactly one piece in the line of fire (any orthogonal range, but must only have one piece ("screen") in the way).
+
+Soldier (S)
+Cannot move backwards or diagonally before river, can only move/capture one space forward at a time. After the river, it can move/capture one space forward/sideways. At end of the board, it cannot move forward/backwards, but can still move/capture sideways.
