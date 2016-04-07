@@ -12,14 +12,14 @@ To begin:
                 At each prompt, input the search depth desired for that AI (integer from 1 to 4 inclusive)
     - Play the game!
 
-To play the game: Input moves until there's a winner
+To play the game: Input moves until there's a winner (namely someone captures their opponent's general)
 
 A move is made by a user input of the form:
     [3 character piece code] [Coordinates of the position where that piece will move]
 
     (these two arguments are on the same line, separated by a space)
 
-The character code is of the following form: [player colour].[piece name letter].[piece number]
+The character code is of the following form: [player colour][piece name letter][piece number]
 
 The player colour is either 'R' for red, or 'B' for black.
 A player can only move his/her own pieces.
@@ -44,6 +44,7 @@ Inputs are not case sensitive.
 A player can end the game by typing "end".
 
 An example of a valid input would be: RA1 E1
+This would move red admiral 1 to the spot E1 on the board
 
 ------------------------------- RULES OF XIANGQI ---------------------------------- 
 The objective of the game is to capture the opponent's general. Whoever does so wins the game.
