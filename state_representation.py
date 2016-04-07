@@ -13,7 +13,7 @@ class Gamestate(object):
         self.turn = turn # False Player is Black, True Player is Red
         self.f_pieces = pieces_false # Pieces held by False player
         self.move = (previous_piece, new_piece) # Original piece and new piece
-        self.won = self.__pincus_winner__()# 1 if True won, -1 if False Won, 0 if no winner yet
+        self.won = self.__winner__()# 1 if True won, -1 if False Won, 0 if no winner yet
         self.grid = self.__make_grid__()# Contains a gamegrid of the current representation
         self.eliminated=eliminated
         #print(self.grid)
@@ -94,7 +94,7 @@ class Gamestate(object):
         return grid
 
     
-    def __pincus_winner__(self):
+    def __winner__(self):
         # Returns 1 if player True won
         # Returns -1 if player False won
         # Returns 0 if game continues
