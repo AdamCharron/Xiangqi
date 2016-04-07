@@ -213,6 +213,7 @@ def print_help():
     print("The piece number corresponds to the that piece type the player wishes to move.\n\n")
     print("The coordinates for this piece's destination must be inputted in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n")
     print("Inputs are not case sensitive.\n")
+    print("A player can end the game by typing \"end\".\n")
     print("An example of a valid input would be \"RA1 E1\"\n")
     print("--------------------------------------------------------------------------------\n\n")
     return
@@ -566,7 +567,7 @@ def main():
 
             else:   # Human player
 
-                input_str = input("\nRed Player, enter the piece code and destination.\nType \"help\" for help, and type \"rules\" for rules: ")
+                input_str = input("\nRed Player, enter the piece code and destination.\nType \"help\" for help, type \"rules\" for rules, and type \"end\" to end the game: ")
 
                 if input_str == "help":
                     print_help()
@@ -574,6 +575,9 @@ def main():
                 elif input_str == "rules":
                     print_rules()
                     continue
+                elif input_str == "end":
+                    print("Red player has ended the game!")
+                    return
 
                 temp = format_input(input_str, current_state.turn)
                 if temp == (-1, -1):
@@ -629,7 +633,7 @@ def main():
                 
             else:   # Human player
 
-                input_str = input("\nBlack Player, enter the piece code and destination.\nType \"help\" for help, and type \"rules\" for rules: ")
+                input_str = input("\nBlack Player, enter the piece code and destination.\nType \"help\" for help, type \"rules\" for rules, and type \"end\" to end the game: ")
 
                 if input_str == "help":
                     print_help()
@@ -637,6 +641,9 @@ def main():
                 elif input_str == "rules":
                     print_rules()
                     continue
+                elif input_str == "end":
+                    print("Black player has ended the game!")
+                    return
                 
                 temp = format_input(input_str, current_state.turn)
                 piecename = temp[0]
