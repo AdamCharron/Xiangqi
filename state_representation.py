@@ -23,7 +23,6 @@ class Gamestate(object):
         #successors returns all possible next gamestates from this gamestate
         successor = list()
         if self.turn:
-            #print(self.grid)
             for i in range(len(self.t_pieces)):
                 for (possibility, eliminate_name) in self.t_pieces[i].successors(self.grid):
                     # Shallow copy: new array with pointers to old objects
@@ -42,8 +41,8 @@ class Gamestate(object):
             for i in range(len(self.f_pieces)):
                 for (possibility, eliminate_name) in self.f_pieces[i].successors(self.grid):
                     new_pieces = self.f_pieces[:]
-                    new_pieces[i] = possibility     # Added this and next line
-                    t_pieces = self.t_pieces        # Wanted to be sure, but looks like they were just forgotten
+                    new_pieces[i] = possibility
+                    t_pieces = self.t_pieces
                     eliminated=None
                     if eliminate_name != None:
                         t_pieces = self.t_pieces[:]
@@ -51,7 +50,6 @@ class Gamestate(object):
                             if piece.name == eliminate_name:
                                 t_pieces.remove(piece)
                                 eliminated=piece
-                    #new_pieces[i] = possibility
                     successor.append(Gamestate(t_pieces, new_pieces, True, self.f_pieces[i], possibility,eliminated))
         return successor
     
@@ -75,8 +73,7 @@ class Gamestate(object):
         for piece in self.f_pieces:
             val_F += piece.get_value()
         #return (val_T + offset) / (val_F + offset)
-        return val_T - val_F    # HEY GUYS IT'S ADAM. TRYING SUBTRACTION CAUSE
-                                # POINT FOR POINT EXCHANGES ARE MORE CONSISTENT
+        return val_T - val_F
         ''' The more pieces we lose, the more valuable the ones we have are.
             The more pieces the opponent loses, the more value is placed on the
             ones he has left.
@@ -93,9 +90,6 @@ class Gamestate(object):
         # of that piece if occupied
         grid=[[0]*10 for _ in range(9)]
         for piece in self.t_pieces + self.f_pieces:
-            #print(piece.name)
-            #print(piece.pos.x)
-            #print(piece.pos.y)
             grid[piece.pos.x][piece.pos.y] = piece.name
         return grid
 

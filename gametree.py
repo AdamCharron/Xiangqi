@@ -26,7 +26,6 @@ class GameTree(object):
         '''navigate the game tree to come up with best configuration,
         return that gamestate'''
         
-        #possibilities = self.min_order(self.current)
         possibilities = self.current.successors()
         shuffle(possibilities)
         if len(possibilities) == 0:
@@ -35,8 +34,7 @@ class GameTree(object):
         
         value = float("inf")
         choice = "no moves"
-        #if gamestate.turn:     # should it be 'if not self.current.turn' ? (AC)
-        if self.current.turn:   # made change suggested in above line (AC)
+        if self.current.turn:
             value = -float("inf")
         if self.current.turn:
             for child in possibilities:
@@ -65,7 +63,6 @@ class GameTree(object):
         
         possibilities = state.successors()
         shuffle(possibilities)
-        #print("Just checking in...{}".format(depth))
         
         if len(possibilities) == 0:
             #case of no valid moves
@@ -90,73 +87,3 @@ class GameTree(object):
                 if value < parent_val:
                     return value
         return value
-
-    '''
-    def min_order(self,state):
-        if not self.implement_minsort:
-            return state.successors()
-        minmax = not state.turn
-        return self.mergeSort(state.successors(), minmax)
-
-    
-    def mergeSort(self, alist, minmax):
-        #if minmax is True, it is smallest to largest. Otherwise it is largest to smallest
-        if minmax:
-            if len(alist) > 1:
-                mid = len(alist) // 2
-                lefthalf = alist[:mid]
-                righthalf = alist[mid:]
-                self.mergeSort(lefthalf)
-                self.mergeSort(righthalf)
-                i=0
-                j=0
-                k=0
-                while i < len(lefthalf) and j < len(righthalf):
-                    if lefthalf[i].value() < righthalf[j].value():
-                        alist[k] = lefthalf[i]
-                        i = i + 1
-                    else:
-                        alist[k] = righthalf[j]
-                        j = j + 1
-                    k = k + 1
-    
-                while i < len(lefthalf):
-                    alist[k] = lefthalf[i]
-                    i = i + 1
-                    k = k + 1
-    
-                while j < len(righthalf):
-                    alist[k] = righthalf[j]
-                    j = j + 1
-                    k = k + 1
-            return alist
-        else:
-            if len(alist) > 1:
-                mid = len(alist) // 2
-                lefthalf = alist[:mid]
-                righthalf = alist[mid:]
-                mergeSort(lefthalf)
-                mergeSort(righthalf)
-                i=0
-                j=0
-                k=0
-                while i < len(lefthalf) and j < len(righthalf):
-                    if lefthalf[i].value > righthalf[j].value:
-                        alist[k] = lefthalf[i]
-                        i = i + 1
-                    else:
-                        alist[k] = righthalf[j]
-                        j = j + 1
-                    k = k + 1
-    
-                while i < len(lefthalf):
-                    alist[k] = lefthalf[i]
-                    i = i + 1
-                    k = k + 1
-    
-                while j < len(righthalf):
-                    alist[k] = righthalf[j]
-                    j = j + 1
-                    k = k + 1
-            return alist
-    '''

@@ -6,53 +6,6 @@ from state_representation import *
 '''
 Rules:
 https://en.wikipedia.org/wiki/Xiangqi
-
-
-Piece movements:
-
-General (G) - can move one space orthogonally
-            - cannot leave the tent
-            - if it has a direct view of other general, can instantly capture it
-            (wins game)
-
-Advisor (A) - can move one spot diagonally
-            - cannot leave the tent
-
-Elephant (E) - can move 2 spaces diagonally (both spaces in same direction)
-             - cannot jump over pieces (blocked if anyone diagonally adjacent)
-             - cannot cross the river
-
-Horse (H) - move one direction orthogonal, then one diagonal (away from start)
-          - cannot jump over pieces (blocked if anyone orthogonally adjacent)
-          - capture pieces at the end of the diagonal move
-
-Chariot (R) - move and capture any distance orthogonally (essentially rook)
-            - cannot jump over any pieces
-
-Cannon (C) - move any distance orthogonally without jumping over any pieces
-           - capture by jumping over exactly one piece in the line of fire (any
-           orthogonal range, but must only have one piece ("screen") in the way)
-
-Soldier (S) - cannot move backwards or diagonally
-            - before river, can only move/capture one space forward at a time
-            - after river, can move/capture one space forward/sideways
-            - at end of the board, cannot move forward/backwards, but can still
-            move/capture sideways
-
-Approximate values:
-
-Soldier before crossing the river	1
-Soldier after crossing the river	2
-Advisor	                                2
-Elephant	                        2
-Horse	                                4
-Cannon	                                4.5
-Chariot	                                9
-(General technically count as infinite since the game ends upon its capture)
-
-
-Potential Move Notation:
-[piece name] ([former rank][former file])-([new rank][new file])
 '''
 
 
@@ -113,7 +66,6 @@ def update_board_from_pieces(total_pieces):
             # Append the codes into a string for the simple name
             # Store this simple name in the board
             board[piece.pos.x][piece.pos.y] = tempcolour + tempname + tempnumber
-            #print("Name: {}, abbreviated: {}".format(piece.name, board[piece.pos.x][piece.pos.y]))
     return board
 
 
@@ -177,8 +129,7 @@ def update_board_from_grid(grid):
 
                 # Append the codes into a string for the simple name
                 # Store this simple name in the board
-                board[i][j] = tempcolour + tempname + tempnumber
-                #print("Name: {}, abbreviated: {}".format(piece.name, board[piece.pos.x][piece.pos.y]))
+                board[i][j] = tempcolour + tempname + tempnumber                
     return board
 
 
@@ -247,9 +198,6 @@ def print_board_2(board):
         row += 1
         print(s)
     s = '\n       '
-    #for col in range(len(board)):
-    #    s += str(col) + '      '
-    #print(s)
     print("\n       A      B      C      D      E      F      G      H      I")
     print("\n")
 
@@ -268,6 +216,18 @@ def print_help():
     print("Type \"print\" to view the game board\n")
     print("An example of a valid input would be \"RA1 E1\"\n")
     print("--------------------------------------------------------------------------------\n\n")
+    return
+
+
+def print_rules():
+    print("The objective of the game is to capture the opponent's general. Whoever does so wins the game")
+    print("General (G)\nCan move and capture one space orthogonally, but cannot leave the tent. If it has a direct view of other general, it can instantly capture it via the \"flying general\" rule to win the game\n")
+    print("Advisor (A)\nCan move and capture one spot diagonally, but cannot leave the tent\n")
+    print("Elephant (E)\nCan move and capture 2 spaces diagonally (both spaces in same direction), cannot jump over pieces (blocked if anyone is one spot diagonally adjacent). It also cannot cross the river\n")
+    print("Horse (H)\nCan move one direction orthogonally, then one diagonally (away from where it started). It cannot jump over pieces (blocked if anyone orthogonally adjacent), but can capture pieces at the end of the diagonal move\n")
+    print("Chariot (R)\nMuch like a rook in chess, it can move and capture any distance orthogonally but cannot jump over any pieces\n")
+    print("Cannon (C)\nCan move any distance orthogonally without jumping over any pieces. It can capture any distance orthogonally by jumping over exactly one piece in the line of fire (any orthogonal range, but must only have one piece (\"screen\") in the way)\n")
+    print("Soldier (S)\nCannot move backwards or diagonally before river, can only move/capture one space forward at a time. After the river, it can move/capture one space forward/sideways. At end of the board, it cannot move forward/backwards, but can still move/capture sideways\n")
     return
 
 
@@ -296,11 +256,6 @@ def format_input(input_str, turn):
         print("\nIncorrect coordinate input length.")
         print("Try again. Type \"help\" for help if needed.\n")
         return -1, -1
-
-    #if input_str[1][0] != "(" or input_str[1][4] != ")" or input_str[1][2] != ",":
-    #    print("\nIncorrect formatting for the inputted coordinates.")
-    #    print("Try again. Type \"help\" for help if needed.\n")
-    #    return -1, -1
 
     # The lengths are good, now checking for valid input and building piecename
     tempcolour = input_str[0][0].upper()
@@ -438,8 +393,6 @@ def player_move(piecename, coords, current_state):
         for piece in current_state.t_pieces:
             if piece.name == piecename:
                 eliminated = None
-                #print(piece.name)
-                #results = piece.check(tuple(coords), current_state.grid)
                 for successor in piece.successors(current_state.grid):
                     if Position(coords[0], coords[1]) == successor[0].pos:
                         F = current_state.f_pieces[:]
@@ -448,22 +401,18 @@ def player_move(piecename, coords, current_state):
                                 if elim_piece.name == successor[1]:
                                     F.remove(elim_piece)
                                     eliminated = elim_piece
-                                    break
-                        #newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                                    break                
                         newpiece = successor[0]
                         T = current_state.t_pieces[:]
                         T.remove(piece)
                         T.append(newpiece)
                         return Gamestate(T, F, not current_state.turn, piece, newpiece, eliminated)
-        #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
 
     else:
         for piece in current_state.f_pieces:
             if piece.name == piecename:
                 eliminated = None
-                #print(piece.name)
-                #results = piece.check(tuple(coords), current_state.grid)
                 for successor in piece.successors(current_state.grid):
                     if Position(coords[0], coords[1]) == successor[0].pos:
                         T = current_state.t_pieces[:]
@@ -472,14 +421,12 @@ def player_move(piecename, coords, current_state):
                                 if elim_piece.name == successor[1]:
                                     T.remove(elim_piece)
                                     eliminated = elim_piece
-                                    break
-                        #newpiece = Piece(Position(coords[0], coords[1]), piece.color, piece.name)
+                                    break                
                         newpiece = successor[0]
                         F = current_state.f_pieces[:]
                         F.remove(piece)
                         F.append(newpiece)
                         return Gamestate(T, F, not current_state.turn, piece, newpiece, eliminated)
-        #print("\nInvalid move. Tried to move a piece that is no longer in play.")
         return None
 
 
@@ -503,7 +450,7 @@ def num_to_letter(num):
     elif num == 8:
         return "I"
     else:
-        print("\nWAT WAT???? Why was {} inputted?\n".format(num))
+        # Should never reach here
         return "-1"
 
 
@@ -517,15 +464,7 @@ def main():
     # When one AI_on = True and the other is False, it is human player vs AI
 
     # Get the number of human players
-    sarcastic_count = 0
-    while True:
-        sarcastic_count += 1
-        if sarcastic_count > 7:
-            print("...Really? -_- Just type '0', '1', or '2'. Jesus Christ.\n")
-        elif sarcastic_count > 3:
-            print("Come on. This is not hard. You're better than this.\n")
-            
-        
+    while True:    
         number_of_human_players = input("Enter the number of human players (0, 1, or 2): ")
         if len(number_of_human_players) != 1:
             print("Invalid number of human players. There can only be 0, 1, or 2.\n")
@@ -555,12 +494,11 @@ def main():
     # --------------------------- AI PARAMETERS ------------------------------
 
     # Can set an input depth for each AI in this module, or through user input
-    input_depth1 = 3   # Arbitrary default value
-    input_depth2 = 3   # Arbitrary default value
+    input_depth1 = 4   # Arbitrary default value
+    input_depth2 = 4   # Arbitrary default value
     if AI1_on:
         while True:
             input_depth1 = str(input("Select the desired search depth for AI1: "))
-            #if len(input_depth1) != 1 or input_depth1 <= "0" or input_depth1 > "9":
             if input_depth1 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 print("Invalid depth. Needs to be between 1 and 9.\n")
                 continue
@@ -568,16 +506,10 @@ def main():
     if AI2_on:
         while True:
             input_depth2 = str(input("Select the desired search depth for AI2: "))
-            #if len(input_depth2) != 1 or input_depth2 <= '0' or input_depth2 > '9':
             if input_depth2 not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 print("Invalid depth. Needs to be between 1 and 9.\n")
                 continue
             break
-
-
-
-    # WILL SEE LATER WHAT ELSE MAY NEED TO BE INPUTTED AS PARAMETERS FOR EACH AI
-
 
 
     # ----------------------------- GAME LOOP ---------------------------------
@@ -585,9 +517,7 @@ def main():
     # Build initial Gamestate
     # Player 1 will be Red (True), Player 2 will be Black (False)
     current_state = Gamestate(redpieces, blackpieces, True, None, None)
-    #print_board_2(update_board_from_pieces(newgame.t_pieces + newgame.f_pieces))
-    #print_board_2(update_board_from_grid(newgame.grid))
-
+    
     while True:
 
         # End the function when one player (or AI) wins
@@ -630,7 +560,6 @@ def main():
                         printstr += " and eliminated Black player's piece {}".format(current_state.eliminated.name)
                     printstr += "\n"
                     print(printstr)
-                    #print("AI Player 1 current state: {}".format(current_state))
                 else:
                     print("\n\nThe game has been won by the Black player!")
                     return                   
@@ -638,10 +567,13 @@ def main():
 
             else:   # Human player
 
-                input_str = input("\nRed Player, enter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
+                input_str = input("\nRed Player, enter the piece code and destination.\nType \"print\" to print the game board, type \"help\" for help, and type \"rules\" for rules: ")
 
                 if input_str == "help":
                     print_help()
+                    continue
+                elif input_str == "rules":
+                    print_rules()
                     continue
                 elif input_str == "print":
                     print("-------------------------------- PRINT ------------------------------- ")
@@ -654,7 +586,6 @@ def main():
                     continue
                 piecename = temp[0]
                 coord = tuple(temp[1])
-                #print("piecename: {}, coord: {}".format(piecename, coord))
 
                 if piecename == -1 or coord == -1:
                     # Invalid entry. Print is handled inside the format_input function
@@ -678,7 +609,6 @@ def main():
                             printstr += " and eliminated Black player's piece {}".format(current_state.eliminated.name)
                         printstr += "\n"                        
                         print(printstr)
-                        #print("Player 1 current state: {}".format(current_state))
                         continue
 
                     
@@ -698,7 +628,6 @@ def main():
                         printstr += " and eliminated Red player's piece {}".format(current_state.eliminated.name)
                     printstr += "\n"
                     print(printstr)
-                    #print("AI Player 2 current state: {}".format(current_state))
                 else:
                     print("\n\nThe game has been won by the Red player!")
                     return                   
@@ -730,8 +659,7 @@ def main():
                     if test == None:
                         print("Invalid move. This piece is unable to go to the desired location.\n")
                         continue
-                    else:
-                        # Do I need to use the whole previous_piece, new_piece stuff and built a new Gamestate object?
+                    else:                        
                         current_state = test
                         x0 = num_to_letter(current_state.move[0].pos.x)
                         y0 = current_state.move[0].pos.y
@@ -742,10 +670,6 @@ def main():
                             printstr += " and eliminated Red player's piece {}".format(current_state.eliminated.name)
                         printstr += "\n"
                         print(printstr)
-                        #print("Player 2 current state: {}".format(current_state))
-                        
-            #current_state.turn = not current_state.turn
-            #current_state = Gamestate(current_state.f_pieces, current_state.t_pieces, not current_state.turn, )
     return
 
 main()
