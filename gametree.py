@@ -40,12 +40,16 @@ class GameTree(object):
             value = -float("inf")
         if self.current.turn:
             for child in possibilities:
+                if child.won==1:
+                    return child
                 child_value = self.nodeval(child, self.depth-1, value)
                 if child_value > value:
                     value = child_value
                     choice = child
         else:
             for child in possibilities:
+                if child.won==-1:
+                    return child
                 child_value = self.nodeval(child, self.depth-1, value)
                 if child_value < value:
                     value = child_value
@@ -70,6 +74,8 @@ class GameTree(object):
         if state.turn:
             value = -float("inf")
             for child in possibilities:
+                if child.won==1:
+                    return float("inf")
                 child_value = self.nodeval(child, depth-1, value)
                 value = max(child_value, value)
                 if value > parent_val:
@@ -77,6 +83,8 @@ class GameTree(object):
         else:
             value = float("inf")
             for child in possibilities:
+                if child.won==-1:
+                    return -float("inf")
                 child_value = self.nodeval(child, depth-1, value)
                 value = min(child_value, value)
                 if value < parent_val:
