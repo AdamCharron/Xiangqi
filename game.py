@@ -207,14 +207,14 @@ def print_help():
     
     print("\n\n------------------------------------ HELP -------------------------------------- ")
     print("A move is made by a user input of the form:\n\t- 3 character piece code\n\t- Coordinates of the position where that piece will move\n\t(these two arguments are on the same line, separated by a space)\n")
-    print("The character code is of the following form: [player colour].[piece name letter].[piece number]\n")
+    print("The character code is of the following form: [player colour][piece name letter][piece number]\n")
     print("The player colour is either 'R' for red, or 'B' for black.\nA player can only move his/her own pieces.\n")
     print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
     print("The piece number corresponds to the piece type that the player wishes to move.\n\n")
     print("The coordinates for this piece's destination must be inputed in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n")
     print("Inputs are not case sensitive.\n")
     print("A player can end the game by typing \"end\".\n")
-    print("An example of a valid input would be \"RA1 E1\"\n")
+    print("An example of a valid input would be: RA1 E1\nThis would move red admiral 1 to the spot E1 on the board.\n")
     print("--------------------------------------------------------------------------------\n\n")
     return
 
