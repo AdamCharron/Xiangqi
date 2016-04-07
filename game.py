@@ -210,8 +210,8 @@ def print_help():
     print("The character code is of the following form: [player colour].[piece name letter].[piece number]\n")
     print("The player colour is either 'R' for red, or 'B' for black.\nA player can only move his/her own pieces.\n")
     print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
-    print("The piece number corresponds to the that piece type the player wishes to move.\n\n")
-    print("The coordinates for this piece's destination must be inputted in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n")
+    print("The piece number corresponds to the piece type that the player wishes to move.\n\n")
+    print("The coordinates for this piece's destination must be inputed in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n")
     print("Inputs are not case sensitive.\n")
     print("A player can end the game by typing \"end\".\n")
     print("An example of a valid input would be \"RA1 E1\"\n")
@@ -220,14 +220,18 @@ def print_help():
 
 
 def print_rules():
+    print("\n\n----------------------------------- RULES -------------------------------------- ")
     print("The objective of the game is to capture the opponent's general. Whoever does so wins the game.\n")
-    print("General (G)\nCan move and capture one space orthogonally, but cannot leave the tent. If it has a direct view of other general, it can instantly capture it via the \"flying general\" move to win the game.\n")
+    print("There is a river horizontally across the middle of the board that can be crossed by anyone except the Advisors, the Elephants, and the Generals (with the exception of the \"flying general\" move described below).\n")
+    print("There are two 3x3 tents, one for each player, centered at the top and bottom of the board. The Advisors cannot leave the tent, and the Generals can only leave the tent for the the \"flying general\" move described below. Any other piece from either player can enter or leave either tent.\n")
+    print("General (G)\nCan move and capture one space orthogonally, but cannot leave the tent. If it has a direct view of the other general, it can instantly capture it via the \"flying general\" move to win the game.\n")
     print("Advisor (A)\nCan move and capture one spot diagonally, but cannot leave the tent.\n")
     print("Elephant (E)\nCan move and capture 2 spaces diagonally (both spaces in same direction), cannot jump over pieces (blocked if anyone is one spot diagonally adjacent). It also cannot cross the river.\n")
     print("Horse (H)\nCan move one direction orthogonally, then one diagonally (away from where it started). It cannot jump over pieces (blocked if anyone orthogonally adjacent), but can capture pieces at the end of the diagonal move.\n")
     print("Chariot (R)\nMuch like a rook in chess, it can move and capture any distance orthogonally but cannot jump over any pieces.\n")
     print("Cannon (C)\nCan move any distance orthogonally without jumping over any pieces. It can capture any distance orthogonally by jumping over exactly one piece in the line of fire (any orthogonal range, but must only have one piece (\"screen\") in the way).\n")
     print("Soldier (S)\nCannot move backwards or diagonally before river, can only move/capture one space forward at a time. After the river, it can move/capture one space forward/sideways. At end of the board, it cannot move forward/backwards, but can still move/capture sideways.\n")
+    print("--------------------------------------------------------------------------------\n\n")
     return
 
 
