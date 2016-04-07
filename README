@@ -33,15 +33,14 @@ The piece name letter is a letter corresponding to the piece type:
     C = cannon
     S = soldier
 
-The piece number corresponds to the piece type that the player wishes to move.
-
+The piece number differentiates different pieces of the same type
 
 The coordinates for this piece's destination must be inputed in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.
 In this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)
 
 Inputs are not case sensitive.
 
-A player can end the game by typing "end".
+A player can end the game by typing "end". A player can also ask for help by typing "help", and can ask for the rules by typing "rules"
 
 An example of a valid input would be: RA1 E1
 This would move red admiral 1 to the spot E1 on the board
