@@ -220,14 +220,14 @@ def print_help():
 
 
 def print_rules():
-    print("The objective of the game is to capture the opponent's general. Whoever does so wins the game")
-    print("General (G)\nCan move and capture one space orthogonally, but cannot leave the tent. If it has a direct view of other general, it can instantly capture it via the \"flying general\" rule to win the game\n")
-    print("Advisor (A)\nCan move and capture one spot diagonally, but cannot leave the tent\n")
-    print("Elephant (E)\nCan move and capture 2 spaces diagonally (both spaces in same direction), cannot jump over pieces (blocked if anyone is one spot diagonally adjacent). It also cannot cross the river\n")
-    print("Horse (H)\nCan move one direction orthogonally, then one diagonally (away from where it started). It cannot jump over pieces (blocked if anyone orthogonally adjacent), but can capture pieces at the end of the diagonal move\n")
-    print("Chariot (R)\nMuch like a rook in chess, it can move and capture any distance orthogonally but cannot jump over any pieces\n")
-    print("Cannon (C)\nCan move any distance orthogonally without jumping over any pieces. It can capture any distance orthogonally by jumping over exactly one piece in the line of fire (any orthogonal range, but must only have one piece (\"screen\") in the way)\n")
-    print("Soldier (S)\nCannot move backwards or diagonally before river, can only move/capture one space forward at a time. After the river, it can move/capture one space forward/sideways. At end of the board, it cannot move forward/backwards, but can still move/capture sideways\n")
+    print("The objective of the game is to capture the opponent's general. Whoever does so wins the game.\n")
+    print("General (G)\nCan move and capture one space orthogonally, but cannot leave the tent. If it has a direct view of other general, it can instantly capture it via the \"flying general\" move to win the game.\n")
+    print("Advisor (A)\nCan move and capture one spot diagonally, but cannot leave the tent.\n")
+    print("Elephant (E)\nCan move and capture 2 spaces diagonally (both spaces in same direction), cannot jump over pieces (blocked if anyone is one spot diagonally adjacent). It also cannot cross the river.\n")
+    print("Horse (H)\nCan move one direction orthogonally, then one diagonally (away from where it started). It cannot jump over pieces (blocked if anyone orthogonally adjacent), but can capture pieces at the end of the diagonal move.\n")
+    print("Chariot (R)\nMuch like a rook in chess, it can move and capture any distance orthogonally but cannot jump over any pieces.\n")
+    print("Cannon (C)\nCan move any distance orthogonally without jumping over any pieces. It can capture any distance orthogonally by jumping over exactly one piece in the line of fire (any orthogonal range, but must only have one piece (\"screen\") in the way).\n")
+    print("Soldier (S)\nCannot move backwards or diagonally before river, can only move/capture one space forward at a time. After the river, it can move/capture one space forward/sideways. At end of the board, it cannot move forward/backwards, but can still move/capture sideways.\n")
     return
 
 
