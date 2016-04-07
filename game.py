@@ -210,10 +210,9 @@ def print_help():
     print("The character code is of the following form: [player colour].[piece name letter].[piece number]\n")
     print("The player colour is either 'R' for red, or 'B' for black.\nA player can only move his/her own pieces.\n")
     print("The piece name letter is a letter corresponding to the piece type:\n\tG = general\n\tA = advisor\n\tE = elephant\n\tH = horse\n\tR = chariot\n\tC = cannon\n\tS = soldier\n")
-    print("The piece number corresponds to the that piece type the player wishes to move.\nType \"print\" to see the game board.\n\n")
-    print("The coordinates for this piece's destination must be inputted in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n\n")
+    print("The piece number corresponds to the that piece type the player wishes to move.\n\n")
+    print("The coordinates for this piece's destination must be inputted in the form XY where X is the letter corresponding to the column, and Y is the number corresponding to the row.\nIn this board, x ranges from A to I, and y from 0 to 9 (origin is at the top left)\n")
     print("Inputs are not case sensitive.\n")
-    print("Type \"print\" to view the game board\n")
     print("An example of a valid input would be \"RA1 E1\"\n")
     print("--------------------------------------------------------------------------------\n\n")
     return
@@ -244,17 +243,17 @@ def format_input(input_str, turn):
     input_str = input_str.split(" ")
     if len(input_str) != 2:
         print("\nIncorrect number of input arguments.")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
 
     if len(input_str[0]) != 3:
         print("\nIncorrect piece code length.")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
 
     if len(input_str[1]) != 2:
         print("\nIncorrect coordinate input length.")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
 
     # The lengths are good, now checking for valid input and building piecename
@@ -271,18 +270,18 @@ def format_input(input_str, turn):
     if tempcolour == "R":
         if not turn:
             print("\nCannot move opponent's pieces.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += "red."
     elif tempcolour == "B":
         if turn:
             print("\nCannot move opponent's pieces.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += "black."
     else:
         print("\nInvalid piece colour.")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
 
 
@@ -291,7 +290,7 @@ def format_input(input_str, turn):
         piecename += "general."
         if tempnumber != "0":
             print("\nInvalid piece number. The general can only have number 0.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
@@ -299,7 +298,7 @@ def format_input(input_str, turn):
         piecename += "advisor."
         if tempnumber not in ["0", "1"]:
             print("\nInvalid piece number. The advisor can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
@@ -307,7 +306,7 @@ def format_input(input_str, turn):
         piecename += "elephant."
         if tempnumber not in ["0", "1"]:
             print("\nInvalid piece number. The elephant can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
@@ -315,7 +314,7 @@ def format_input(input_str, turn):
         piecename += "horse."
         if tempnumber not in ["0", "1"]:
             print("\nInvalid piece number. The horse can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
@@ -323,7 +322,7 @@ def format_input(input_str, turn):
         piecename += "chariot."
         if tempnumber not in ["0", "1"]:
             print("\nInvalid piece number. The chariot can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
@@ -331,7 +330,7 @@ def format_input(input_str, turn):
         piecename += "cannon."
         if tempnumber not in ["0", "1"]:
             print("\nInvalid piece number. The cannon can only have numbers 0 or 1.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
@@ -339,13 +338,13 @@ def format_input(input_str, turn):
         piecename += "soldier."
         if tempnumber not in ["0", "1", "2", "3", "4"]:
             print("\nInvalid piece number. The soldier can only have numbers 0, 1, 2, 3, or 4.")
-            print("Try again. Type \"help\" for help if needed.\n")
+            print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
             return -1, -1
         piecename += tempnumber
         
     else:
         print("\nInvalid piece name letter.")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
 
 
@@ -370,11 +369,11 @@ def format_input(input_str, turn):
         tempx = 8
     else:
         print("\nInvalid x coordinate. x coordinates should be between 0 and 8")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
     if tempy not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
         print("\nInvalid y coordinate. y coordinates should be between 0 and 9")
-        print("Try again. Type \"help\" for help if needed.\n")
+        print("Try again. Type \"help\" for help if needed, and type \"rules\" for rules.\n")
         return -1, -1
     coord = [tempx, int(tempy)]
     
@@ -567,18 +566,13 @@ def main():
 
             else:   # Human player
 
-                input_str = input("\nRed Player, enter the piece code and destination.\nType \"print\" to print the game board, type \"help\" for help, and type \"rules\" for rules: ")
+                input_str = input("\nRed Player, enter the piece code and destination.\nType \"help\" for help, and type \"rules\" for rules: ")
 
                 if input_str == "help":
                     print_help()
                     continue
                 elif input_str == "rules":
                     print_rules()
-                    continue
-                elif input_str == "print":
-                    print("-------------------------------- PRINT ------------------------------- ")
-                    print_board_2(update_board_from_grid(current_state.grid))
-                    print("-------------------------------- PRINT ------------------------------- ")
                     continue
 
                 temp = format_input(input_str, current_state.turn)
@@ -635,18 +629,13 @@ def main():
                 
             else:   # Human player
 
-                input_str = input("\nBlack Player, enter the piece code and destination.\nType \"print\" to print the game board, type \"help\" for help, and type \"rules\" for rules: ")
+                input_str = input("\nBlack Player, enter the piece code and destination.\nType \"help\" for help, and type \"rules\" for rules: ")
 
                 if input_str == "help":
                     print_help()
                     continue
                 elif input_str == "rules":
                     print_rules()
-                    continue
-                elif input_str == "print":
-                    print("-------------------------------- PRINT ------------------------------- ")
-                    print_board_2(update_board_from_grid(current_state.grid))
-                    print("-------------------------------- PRINT ------------------------------- ")
                     continue
                 
                 temp = format_input(input_str, current_state.turn)
