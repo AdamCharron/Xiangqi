@@ -635,10 +635,13 @@ def main():
                 
             else:   # Human player
 
-                input_str = input("\nBlack Player, enter the piece code and destination.\nType \"print\" to print the game board, and type \"help\" for help: ")
+                input_str = input("\nBlack Player, enter the piece code and destination.\nType \"print\" to print the game board, type \"help\" for help, and type \"rules\" for rules: ")
 
                 if input_str == "help":
                     print_help()
+                    continue
+                elif input_str == "rules":
+                    print_rules()
                     continue
                 elif input_str == "print":
                     print("-------------------------------- PRINT ------------------------------- ")
